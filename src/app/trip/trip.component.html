@@ -1,0 +1,17 @@
+<p>{{trip.name}}</p>
+<button mat-raised-button (click)="onClickUpdateTrip()">Update</button>
+<button mat-raised-button (click)="onClickManagePlan()">Manage Plan</button>
+<button mat-raised-button (click)="onClickCreateTicket()">Ticket Informations</button>
+<button mat-raised-button (click)="onClickCreateLogement()">Accomodation Informations</button>
+<mat-vertical-stepper *ngIf="activities" #stepper>
+    <div *ngFor="let activity of activities">
+    <mat-step>
+        <ng-template matStepperIcon="" matStepLabel>Fill out your name</ng-template>
+        <div>
+            {{ activity.name }}
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+    </mat-step>
+    </div>
+  </mat-vertical-stepper>

@@ -1,0 +1,28 @@
+    <input matInput value="{{this.planName}}" *ngIf="trip.plan_id === 0" placeholder="Plan name">
+  <h1 *ngIf="trip.plan_id !== 0">{{plan.name}}</h1>
+  <h2>Plan Activities</h2>
+    <button mat-icon-button (click)="onClickCreateActivity()">
+        <mat-icon>add</mat-icon>
+    </button>
+      <div
+      cdkDropList
+      #planActivitiesList="cdkDropList"
+      [cdkDropListData]="planActivities"
+      [cdkDropListConnectedTo]="[activitiesList]"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of planActivities" cdkDrag>{{item.name}}</div>
+    </div>
+  
+    <h2>Acitivities Suggestion</h2>
+  
+    <div
+      cdkDropList
+      #activitiesList="cdkDropList"
+      [cdkDropListData]="activities"
+      [cdkDropListConnectedTo]="[planActivitiesList]"
+      (cdkDropListDropped)="drop($event)">
+      <div *ngFor="let item of activities" cdkDrag>{{item.name}}</div>
+    </div>
+  <button mat-raised-button (click)="onClickPlans()">
+    Save the plan
+  </button>  
