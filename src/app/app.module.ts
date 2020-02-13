@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MatButtonModule, MatInputModule, MatDialogModule, MatDatepickerModule, MatFormFieldModule, MatSelectModule, MatNativeDateModule, MatIconModule } from '@angular/material'
+import { MatButtonModule, MatInputModule, MatDialogModule, MatDatepickerModule, MatFormFieldModule, MatSelectModule, MatNativeDateModule, MatIconModule, MatCardModule, MatToolbarModule } from '@angular/material'
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
@@ -44,7 +44,9 @@ import { ProfileUpdateComponent } from './profile-update/profile-update.componen
         BrowserAnimationsModule,
         MatStepperModule,
         DragDropModule,
-        MatIconModule
+        MatIconModule,
+        MatCardModule,
+        MatToolbarModule
     ],
     declarations: [
         AppComponent,

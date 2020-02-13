@@ -1,20 +1,9 @@
 <!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
-  <div class="navbar-nav">
+<mat-toolbar color="primary" class="app-header">
       <button mat-button class="nav-item nav-link" routerLink="/">Home</button>
       <button mat-button class="nav-item nav-link" routerLink="/profile/{{currentUser.id}}">Profile</button>
       <button mat-button class="nav-item nav-link" (click)="logout()">Logout</button>
-  </div>
-</nav>
+</mat-toolbar>
 
 <!-- main app container -->
-<div class="jumbotron">
-  <div class="container">
-      <div class="row">
-          <div class="col-sm-6 offset-sm-3">
-              <alert></alert>
-              <router-outlet></router-outlet>
-          </div>
-      </div>
-  </div>
-</div>
+<router-outlet></router-outlet>
