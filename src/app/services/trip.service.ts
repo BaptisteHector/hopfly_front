@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Trip } from '../models';
+import { Trip, Ticket, Logement } from '../models';
 import { Activity } from '../models/activity';
 
 @Injectable({
@@ -70,6 +70,22 @@ export class TripService {
       .pipe(
         tap(_ => this.log('fetched Trips')),
         catchError(this.handleError<Activity[]>('getTrips', []))
+      );
+  }
+
+  getTripTickets(id: string): Observable<Ticket[]> {
+    return this.http.get<Ticket[]>(this.TripsUrl + '/GetTripsTickets/' + id)
+      .pipe(
+        tap(_ => this.log('fetched Trips')),
+        catchError(this.handleError<Ticket[]>('getTrips', []))
+      );
+  }
+
+  getTripLogements(id: string): Observable<Logement[]> {
+    return this.http.get<Logement[]>(this.TripsUrl + '/GetTripsLogements/' + id)
+      .pipe(
+        tap(_ => this.log('fetched Trips')),
+        catchError(this.handleError<Logement[]>('getTrips', []))
       );
   }
 

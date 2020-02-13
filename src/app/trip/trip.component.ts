@@ -37,7 +37,7 @@ export class TripComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id');
     this.tripService.getTrip(id)
     .subscribe(trip => {this.trip = trip
-      console.log(trip)
+      this.loadPlan();
     });
   }
 
@@ -46,7 +46,10 @@ export class TripComponent implements OnInit {
       return ;
     }
     this.planService.getPlan(this.trip.plan_id)
-    .subscribe(plan => this.plan = plan);
+    .subscribe(plan => {this.plan = plan
+      this.loadActivities()
+    }
+      );
   }
 
   public loadActivities() {
@@ -56,6 +59,7 @@ export class TripComponent implements OnInit {
     this.planService.getPlanActivities(this.plan.activities)
     .pipe(first())
     .subscribe(activities => {
+      console.log(activities)
         this.activities = activities
     });
   }
@@ -63,7 +67,8 @@ export class TripComponent implements OnInit {
   // Button Management
 
   public onClickUpdateTrip() {
-
+    let id = this.trip.id;
+    this.router.navigate(['trip/update/' + id]);
   }
 
   public onClickManagePlan() {
@@ -72,10 +77,12 @@ export class TripComponent implements OnInit {
   }
 
   public onClickCreateTicket() {
-
+    let id = this.trip.id;
+    this.router.navigate(['trip/ticket/' + id]);
   }
 
   public onClickCreateLogement() {
-
+    let id = this.trip.id;
+    this.router.navigate(['trip/logement/' + id]);
   }
 }

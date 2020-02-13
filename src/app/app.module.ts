@@ -20,6 +20,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TripComponent } from './trip';
 import {MatStepperModule} from '@angular/material/stepper';
 import { PlanComponent, ActivityDialog } from './plan';
+import { ProfileComponent } from './profile/profile.component';
+import { TicketComponent } from './ticket/ticket.component';
+import { LogementComponent } from './logement/logement.component';
+import { UpdateTripComponent } from './update-trip/update-trip.component';
+import { ProfileUpdateComponent } from './profile-update/profile-update.component';
 
 @NgModule({
     imports: [
@@ -50,7 +55,12 @@ import { PlanComponent, ActivityDialog } from './plan';
         RegisterComponent,
         AlertComponent,
         TripComponent,
-        PlanComponent
+        PlanComponent,
+        ProfileComponent,
+        TicketComponent,
+        LogementComponent,
+        UpdateTripComponent,
+        ProfileUpdateComponent
     ],
     entryComponents: [
         ActivityDialog,

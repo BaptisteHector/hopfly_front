@@ -1,5 +1,6 @@
-    <input matInput value="{{this.planName}}" *ngIf="trip.plan_id === 0" placeholder="Plan name">
-  <h1 *ngIf="trip.plan_id !== 0">{{plan.name}}</h1>
+<form [formGroup]="planForm" (ngSubmit)="onSubmit()">
+  <input matInput formControlName="name" *ngIf="trip.plan_id === 0" placeholder="Plan name">
+  <h1 formControlName="name" *ngIf="trip.plan_id !== 0">{{plan.name}}</h1>
   <h2>Plan Activities</h2>
     <button mat-icon-button (click)="onClickCreateActivity()">
         <mat-icon>add</mat-icon>
@@ -23,6 +24,7 @@
       (cdkDropListDropped)="drop($event)">
       <div *ngFor="let item of activities" cdkDrag>{{item.name}}</div>
     </div>
-  <button mat-raised-button (click)="onClickPlans()">
+  <button mat-raised-button type="submit">
     Save the plan
-  </button>  
+  </button>
+</form>

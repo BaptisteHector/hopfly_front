@@ -1,0 +1,5 @@
+<h1>Hi {{currentUser.firstName}}!</h1>
+<button mat-raised-button (click)="openDialog()">Create Trip</button>
+<li *ngFor="let ticket of tickets">
+    <span>{{ trip.name }} / {{ trip.description }}</span>
+</li>

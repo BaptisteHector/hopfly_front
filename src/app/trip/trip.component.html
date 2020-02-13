@@ -6,11 +6,9 @@
 <mat-vertical-stepper *ngIf="activities" #stepper>
     <div *ngFor="let activity of activities">
     <mat-step>
-        <ng-template matStepperIcon="" matStepLabel>Fill out your name</ng-template>
+        <ng-template matStepperIcon="" matStepLabel>{{activity.name}}</ng-template>
         <div>
-            {{ activity.name }}
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+            {{ activity.description }}
         </div>
     </mat-step>
     </div>

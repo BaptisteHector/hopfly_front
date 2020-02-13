@@ -2,6 +2,7 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
   <div class="navbar-nav">
       <button mat-button class="nav-item nav-link" routerLink="/">Home</button>
+      <button mat-button class="nav-item nav-link" routerLink="/profile/{{currentUser.id}}">Profile</button>
       <button mat-button class="nav-item nav-link" (click)="logout()">Logout</button>
   </div>
 </nav>

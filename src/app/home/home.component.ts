@@ -2,10 +2,9 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { first, takeUntil, take } from 'rxjs/operators';
 
 import { User, Trip } from '../models';
-import debounce from '../utils/debounce';
 import { MapBoxService, UserService, AuthenticationService, TripService, AlertService } from '../services';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSelect } from '@angular/material';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { MBFeature, MBReply } from '../models/mapbox';
 
@@ -18,8 +17,6 @@ export class HomeComponent implements OnInit {
     constructor(
         private authenticationService: AuthenticationService,
         private userService: UserService,
-        private alertService: AlertService,
-        private tripService: TripService,
         public dialog: MatDialog
     ) {
         this.currentUser = this.authenticationService.currentUserValue;
@@ -31,7 +28,7 @@ export class HomeComponent implements OnInit {
         });
     
         dialogRef.afterClosed().subscribe(result => {
-          console.log('The dialog was closed ' + result);
+          this.loadAllTrip()
         });
       }
 
@@ -112,7 +109,6 @@ export class TripDialog {
         );
     }    
     
-        
     onNoClick(): void {
       this.dialogRef.close();
     }

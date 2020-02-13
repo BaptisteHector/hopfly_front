@@ -17,9 +17,9 @@ export class PlanComponent implements OnInit {
 
   @Input() trip: Trip;
   currentUser: User;
-  planName = '';
   planActivities: Activity[] = [];
   activities: Activity[];
+  planForm: FormGroup;
   plan: Plan = new Plan();
 
 
@@ -34,6 +34,11 @@ export class PlanComponent implements OnInit {
     private router: Router
     ) {
       this.currentUser = this.authenticationService.currentUserValue;
+
+      this.planForm = this.formBuilder.group({
+        name: '',
+        activities: []
+    });
   }
 
   ngOnInit() {
@@ -41,18 +46,19 @@ export class PlanComponent implements OnInit {
     this.loadActivities();
   }
 
-  public onClickPlans()
+  public onSubmit()
   {
-    console.log("oui oui")
     let plan = new Plan()
     let ret = '';
     this.planActivities.forEach(element => {
       ret += (element.id + ',');
     });
     plan.activities = ret
+    plan.location = this.trip.location
     if (this.trip.plan_id === 0)
     {
-      plan.name = this.planName;
+      console.log("PLAN NAME" + this.planForm.controls.name.value)
+      plan.name = this.planForm.controls.name.value;
       this.planService.addPlan(plan, this.trip.id).subscribe(
         data => {
             this.alertService.success('Trip created', true);
@@ -66,7 +72,7 @@ export class PlanComponent implements OnInit {
       plan.id = this.plan.id;
       this.planService.updatePlan(plan).subscribe(
         data => {
-            this.alertService.success('Trip updated', true);
+            this.alertService.success('Plan updated', true);
         },
         error => {
             this.alertService.error(error);
@@ -92,7 +98,6 @@ export class PlanComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       let ret: Activity = result;
-      console.log(this.plan);
       if (result)
         this.planActivities.push(ret);
     });
@@ -115,7 +120,7 @@ export class PlanComponent implements OnInit {
     }
     this.planService.getPlan(this.trip.plan_id)
     .subscribe(plan => { this.plan = plan;
-      this.planName = plan.name;
+      this.planForm.controls.name.setValue(plan.name);
       console.log(this.plan);
     this.loadPlanActivities()});
   }
