@@ -65,7 +65,7 @@ export class TripDialog {
     private searchPlaceSub: Subscription;
     private inputWatcher: Subscription;    
 
-    @ViewChild('placeInputSearch', {static: false}) placeInputSearch;
+    @ViewChild('placeInputSearch') placeInputSearch;
     @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
     @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
     constructor(
