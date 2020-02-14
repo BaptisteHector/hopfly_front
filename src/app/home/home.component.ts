@@ -3,7 +3,8 @@ import { first, takeUntil, take } from 'rxjs/operators';
 
 import { User, Trip } from '../models';
 import { MapBoxService, UserService, AuthenticationService, TripService, AlertService } from '../services';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSelect } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelect } from '@angular/material/select';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { MBFeature, MBReply } from '../models/mapbox';
@@ -65,7 +66,7 @@ export class TripDialog {
     private searchPlaceSub: Subscription;
     private inputWatcher: Subscription;    
 
-    @ViewChild('placeInputSearch') placeInputSearch;
+    @ViewChild('placeInputSearch', { static: false }) placeInputSearch;
     @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
     @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
     constructor(

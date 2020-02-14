@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {DragDropModule, moveItemInArray, CdkDragDrop, transferArrayItem} from '@angular/cdk/drag-drop';
 import { TripService, AuthenticationService, PlanService, ActivityService, MapBoxService, UserService, AlertService } from '../services';
 import { first, take, takeUntil } from 'rxjs/operators';
-import { MAT_DIALOG_DATA, MatDialogRef, MatSelect, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatSelect } from '@angular/material/select';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ReplaySubject, Subject, Subscription } from 'rxjs';
 

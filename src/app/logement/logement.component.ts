@@ -3,7 +3,8 @@ import { Trip, User, Activity, Plan, Logement, MBReply, MBFeature } from '../mod
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TripService, PlanService, ActivityService, AuthenticationService, AlertService, MapBoxService, LogementService } from '../services';
-import { MatDialog, MatSelect, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelect } from '@angular/material/select';
 import { ActivityDialog } from '../plan';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
