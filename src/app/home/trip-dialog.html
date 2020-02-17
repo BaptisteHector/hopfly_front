@@ -6,7 +6,6 @@
         <div class="row ">
           <div class="file-field input-field">
               <div class="btn">
-                  <span>Fichier</span>
                   <input formControlName="selected_img" type="file" name="image" class="btn teal"
                          (change)="readURL($event);"/>
               </div>
@@ -23,6 +22,7 @@
             <mat-form-field>
             <textarea matInput formControlName="description" placeholder="Description"></textarea>
         </mat-form-field>
+        <br/>
         <mat-form-field>
             <mat-select formControlName="location" placeholder="Where?" class="validate" id="search"
                    name="search" #singleSelect>
@@ -34,16 +34,19 @@
                    </mat-option>
                   </mat-select>
                   </mat-form-field>
-        <mat-form-field>
-            <input matInput formControlName="begin_date" [matDatepicker]="picker1" placeholder="Beginning of your trip">
+                  <br/>
+                  <mat-form-field>
+          <input matInput formControlName="begin_date" [matDatepicker]="picker1" placeholder="Beginning of your trip">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
+        <br/>
         <mat-form-field>
             <input matInput formControlName="end_date" [matDatepicker]="picker2" placeholder="End of your trip">
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
+        <br/>
     <mat-form-field>
         <mat-select formControlName="users" placeholder="Invite friends" [multiple]="true" #multiSelect>
         <mat-option>
@@ -54,5 +57,6 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-    <button mat-raised-button type="submit">Create</button>
+      <br/>
+      <button mat-raised-button type="submit">Create</button>
 </form>

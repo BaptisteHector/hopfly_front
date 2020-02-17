@@ -24,12 +24,16 @@ export class TripOverviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.trip)
     this.loadParticipant()
   }
   
   loadParticipant() {
     this.tripService.getTripUsers(this.trip.user_id)
     .pipe(first())
-    .subscribe(users => this.guest = users)
+    .subscribe(users => {
+      const index: number = users.indexOf(this.currentUser);
+      users.splice(index, 1)
+      this.guest = users})
   }
 }

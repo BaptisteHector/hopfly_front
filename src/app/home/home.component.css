@@ -1,3 +1,15 @@
 .title {
+    padding-top: 60px;
+    font-size: 50px;
+    text-align: center;
     color: white;
+}
+
+.createBtn {
+    text-align: center;
+}
+
+.mylist {
+    padding-left: 5%;
+    padding-bottom: 2%;
 }

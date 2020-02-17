@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 
     openDialog(): void {
         const dialogRef = this.dialog.open(TripDialog, {
-          width: '250px'
+          width: '70%'
         });
     
         dialogRef.afterClosed().subscribe(result => {
@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
         if (this.currentUser.trip_id === null)
             return;
         this.userService.getUserTrips(this.currentUser.trip_id)
-            .pipe(first())
+            .pipe()
             .subscribe(trips => {
                 console.log(trips)
                 this.trips = trips
@@ -56,6 +56,7 @@ export class HomeComponent implements OnInit {
 
 @Component({
     templateUrl: 'trip-dialog.html',
+    styleUrls: ['./home.component.css'],
   })
 export class TripDialog {
     currentUser: User

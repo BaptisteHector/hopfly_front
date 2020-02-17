@@ -15,6 +15,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { AvatarModule } from 'ngx-avatar';
+import {MatGridListModule} from '@angular/material/grid-list'
 
 import { appRoutingModule } from './app.routing';
 import { AppComponent } from './app.component';
@@ -54,7 +55,8 @@ import { TripOverviewComponent } from './trip-overview/trip-overview.component';
         MatCardModule,
         DragDropModule,
         MatToolbarModule,
-        AvatarModule
+        AvatarModule,
+        MatGridListModule
     ],
     declarations: [
         AppComponent,

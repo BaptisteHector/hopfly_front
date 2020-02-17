@@ -1,25 +1,27 @@
-<a routerLink="/trip/{{trip.id}}">
-<mat-card class="example-card">
-    <mat-card-header>
-        <ngx-avatar *ngIf="trip.pic else tripname"mat-card-avatar src="{{trip.pic}}"></ngx-avatar>
-        <ng-template #tripname>
-        <ngx-avatar mat-card-avatar name="{{trip.name}}"></ngx-avatar>
-        </ng-template>
-        <mat-card-title>{{trip.name}}</mat-card-title>
-      <mat-card-subtitle>{{trip.begin_date | date:'mediumDate'}} - {{trip.end_date | date:'mediumDate'}}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-    <p class="m-4">
-        {{trip.description}}
-    </p>
-    <div class="row">
-    <li *ngFor="let user of guest">
-        <ngx-avatar *ngIf="user.pic else guestname"mat-card-avatar src="{{guest.pic}}"></ngx-avatar>
-        <ng-template #guestname>
-        <ngx-avatar mat-card-avatar name="{{guest.username}}"></ngx-avatar>
-        </ng-template>
-    </li>
+
+        <a routerLink="/trip/{{trip.id}}">
+            <div class="plx-card silver">
+      <div class="pxc-avatar"><img src="../../assets/tripIcon.png"/></div>
+    <div class="pxc-subcard">
+      <div class="pxc-title">{{trip.name}}</div>
+      <div class="pxc-sub"> {{trip.begin_date | date:'mediumDate'}} - {{trip.end_date | date:'mediumDate'}}  </div>
+      <div class="pxc-feats">{{trip.description}}</div>
+      <div class="bottom-row"> 
+        <div class="pxc-info">
+            <li class="userlist" *ngFor="let user of guest">
+                <ngx-avatar *ngIf="user.pic else guestname" size="20" mat-card-avatar src="{{user.pic}}"></ngx-avatar>
+                <ng-template #guestname>
+                <ngx-avatar mat-card-avatar size="25" name="{{user.username}}"></ngx-avatar>
+                </ng-template>
+            </li>
+        </div>
+      </div>
+    </div>
+    <div >
+        <img class="mypic" *ngIf="trip.pic else defaultpic" src="{{trip.pic}}">
+        <ng-template #defaultpic>
+            <img class="mypic" src="../../assets/defaultTrip.jpg">
+          </ng-template>
+        </div>    
 </div>
-    </mat-card-content>
-  </mat-card>
 </a>

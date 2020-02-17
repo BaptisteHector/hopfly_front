@@ -1,5 +1,8 @@
-<h1 class="title">Hi {{currentUser.username}}!</h1>
+<h1 class="title">Hi {{currentUser.username}}!
+</h1>
+<div class="createBtn">
+<button mat-raised-button color="primary" (click)="openDialog()">Create Trip</button>
+</div>
 <li *ngFor="let trip of trips">
-    <app-trip-overview @fadeAnimation [trip]='trip'></app-trip-overview>
+    <app-trip-overview class="mylist" @fadeAnimation [trip]='trip'></app-trip-overview>
 </li>
-<button mat-raised-button (click)="openDialog()">Create Trip</button>
