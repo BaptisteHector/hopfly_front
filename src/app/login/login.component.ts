@@ -4,9 +4,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AlertService, AuthenticationService } from '../services';
+import { fadeAnimation } from '../utils/animation';
 
 @Component({ templateUrl: 'login.component.html',
-            styleUrls: ['./login.component.css'] }
+            styleUrls: ['./login.component.css'],
+            animations: [fadeAnimation] }
 )
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;

@@ -5,8 +5,11 @@ import { first } from 'rxjs/operators';
 
 import { AlertService, UserService, AuthenticationService } from '../services';
 import { User } from '../models';
+import { fadeAnimation } from '../utils/animation';
 
-@Component({ templateUrl: 'register.component.html' })
+@Component({ templateUrl: 'register.component.html',
+            styleUrls: ['./register.component.css'],
+            animations: [fadeAnimation] })
 export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
@@ -27,8 +30,7 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
+            email: ['', Validators.required],
             username: ['', Validators.required],
             password: ['', Validators.required]
         });
@@ -51,11 +53,6 @@ export class RegisterComponent implements OnInit {
         this.loading = true;
         let user = new User()
         user = this.registerForm.value
-        console.log(user)
-        //user.firstName = this.registerForm.controls.firstname.value
-        //user.lastName = this.registerForm.controls.lastname.value
-        //user.password = this.registerForm.controls.password.value
-        //user.username = this.registerForm.controls.username.value
         this.add(user)
     }
 

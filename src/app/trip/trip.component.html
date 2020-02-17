@@ -5,7 +5,7 @@
 <button mat-raised-button (click)="onClickCreateLogement()">Accomodation Informations</button>
 <mat-vertical-stepper *ngIf="activities" #stepper>
     <div *ngFor="let activity of activities">
-    <mat-step>
+    <mat-step @fadeAnimation>
         <ng-template matStepperIcon="" matStepLabel>{{activity.name}}</ng-template>
         <div>
             {{ activity.description }}

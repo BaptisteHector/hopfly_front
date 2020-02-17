@@ -1,7 +1,7 @@
 <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
-    <mat-card class="box">
+    <mat-card class="box" @fadeAnimation>
         <mat-card-header>
-            <mat-card-title>Log in</mat-card-title>
+            <mat-card-title class="title">Log in</mat-card-title>
         </mat-card-header>
         <form [formGroup]="loginForm" class="example-form" (ngSubmit)="onSubmit()">
             <mat-card-content>
