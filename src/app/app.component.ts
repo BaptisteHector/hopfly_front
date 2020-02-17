@@ -6,7 +6,9 @@ import { User } from './models';
 
 import './content/app.less';
 
-@Component({ selector: 'app-root', templateUrl: 'app.component.html' })
+@Component({ selector: 'app-root', 
+            styleUrls: ['./app.component.css'],
+            templateUrl: 'app.component.html' })
 export class AppComponent {
     currentUser: User;
 
