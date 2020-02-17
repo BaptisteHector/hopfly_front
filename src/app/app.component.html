@@ -1,10 +1,10 @@
 <!-- nav -->
 <mat-toolbar color="primary" class="app-header">
       <span class="logo">VeryFar</span>
-      <div>
-            <button mat-button *ngIf="currentUser" class="nav-item nav-link" routerLink="/">Home</button>
-            <button mat-button *ngIf="currentUser" class="nav-item nav-link" routerLink="/profile/{{currentUser.id}}">Profile</button>
-            <button mat-button *ngIf="currentUser" class="nav-item nav-link" (click)="logout()">Logout</button>
+      <div *ngIf="currentUser">
+            <button mat-button class="nav-item nav-link" routerLink="/">Home</button>
+            <button mat-button class="nav-item nav-link" routerLink="/profile/{{currentUser.id}}">Profile</button>
+            <button mat-button class="nav-item nav-link" (click)="logout()">Logout</button>
       </div>
 </mat-toolbar>
 

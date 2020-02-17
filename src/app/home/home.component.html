@@ -1,5 +1,5 @@
 <h1 class="title">Hi {{currentUser.username}}!</h1>
 <li *ngFor="let trip of trips">
-    <app-trip-overview [trip]='trip'></app-trip-overview>
+    <app-trip-overview @fadeAnimation [trip]='trip'></app-trip-overview>
 </li>
 <button mat-raised-button (click)="openDialog()">Create Trip</button>

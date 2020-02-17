@@ -4,11 +4,13 @@ import { TripService, AuthenticationService, PlanService } from '../services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Activity } from '../models/activity';
 import { first } from 'rxjs/operators';
+import { fadeAnimation } from '../utils/animation';
 
 @Component({
   selector: 'app-trip',
   templateUrl: './trip.component.html',
-  styleUrls: ['./trip.component.css']
+  styleUrls: ['./trip.component.css'],
+  animations: [fadeAnimation]
 })
 export class TripComponent implements OnInit {
   @Input() trip: Trip;

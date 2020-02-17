@@ -8,10 +8,12 @@ import { MatSelect } from '@angular/material/select';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { MBFeature, MBReply } from '../models/mapbox';
+import { fadeAnimation } from '../utils/animation';
 
 
 @Component({ templateUrl: 'home.component.html',
-            styleUrls: ['./home.component.css'] })
+            styleUrls: ['./home.component.css'],
+            animations: [fadeAnimation] })
 export class HomeComponent implements OnInit {
     currentUser: User;
     trips: Trip[];
