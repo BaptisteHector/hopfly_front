@@ -12,6 +12,14 @@
     <p class="m-4">
         {{trip.description}}
     </p>
+    <div class="row">
+    <li *ngFor="let user of guest">
+        <ngx-avatar *ngIf="user.pic else guestname"mat-card-avatar src="{{guest.pic}}"></ngx-avatar>
+        <ng-template #guestname>
+        <ngx-avatar mat-card-avatar name="{{guest.username}}"></ngx-avatar>
+        </ng-template>
+    </li>
+</div>
     </mat-card-content>
   </mat-card>
 </a>

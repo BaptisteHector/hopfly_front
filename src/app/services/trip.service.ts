@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Trip, Ticket, Logement } from '../models';
+import { Trip, Ticket, Logement, User } from '../models';
 import { Activity } from '../models/activity';
 
 @Injectable({
@@ -66,15 +66,23 @@ export class TripService {
   }
 
   getTripActivities(id: string): Observable<Activity[]> {
-    return this.http.get<Activity[]>(this.TripsUrl + '/GetTripsActivities/' + id)
+    return this.http.get<Activity[]>(this.TripsUrl + '/GetTripActivities/' + id)
       .pipe(
         tap(_ => this.log('fetched Trips')),
         catchError(this.handleError<Activity[]>('getTrips', []))
       );
   }
 
+  getTripUsers(id: string): Observable<User[]> {
+    return this.http.get<User[]>(this.TripsUrl + '/GetTripUsers/' + id)
+      .pipe(
+        tap(_ => this.log('fetched Trips')),
+        catchError(this.handleError<User[]>('getTrips', []))
+      );
+  }
+
   getTripTickets(id: string): Observable<Ticket[]> {
-    return this.http.get<Ticket[]>(this.TripsUrl + '/GetTripsTickets/' + id)
+    return this.http.get<Ticket[]>(this.TripsUrl + '/GetTripTickets/' + id)
       .pipe(
         tap(_ => this.log('fetched Trips')),
         catchError(this.handleError<Ticket[]>('getTrips', []))
@@ -82,7 +90,7 @@ export class TripService {
   }
 
   getTripLogements(id: string): Observable<Logement[]> {
-    return this.http.get<Logement[]>(this.TripsUrl + '/GetTripsLogements/' + id)
+    return this.http.get<Logement[]>(this.TripsUrl + '/GetTripLogements/' + id)
       .pipe(
         tap(_ => this.log('fetched Trips')),
         catchError(this.handleError<Logement[]>('getTrips', []))
