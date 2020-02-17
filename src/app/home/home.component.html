@@ -1,7 +1,5 @@
-<h1>Hi {{currentUser.firstName}}!</h1>
-<button mat-raised-button (click)="openDialog()">Create Trip</button>
+<h1 class="title">Hi {{currentUser.username}}!</h1>
 <li *ngFor="let trip of trips">
-    <a routerLink="/trip/{{trip.id}}">
-        <span>{{ trip.name }} / {{ trip.description }}</span>
-    </a>
+    <app-trip-overview [trip]='trip'></app-trip-overview>
 </li>
+<button mat-raised-button (click)="openDialog()">Create Trip</button>

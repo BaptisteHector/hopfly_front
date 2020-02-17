@@ -3,7 +3,24 @@
         <mat-form-field>
             <input matInput formControlName="name" placeholder="Trip name">
         </mat-form-field>
-        <mat-form-field>
+        <div class="row ">
+          <div class="file-field input-field">
+              <div class="btn">
+                  <span>Fichier</span>
+                  <input formControlName="selected_img" type="file" name="image" class="btn teal"
+                         (change)="readURL($event);"/>
+              </div>
+          </div>
+  </div>
+      <ng-container *ngIf="this.tripForm.controls.selected_img.value">
+        <div class="btn col s6 offset-s3" (click)="resetPicture()">Annuler</div>
+      </ng-container>
+        <div class="col s8" *ngIf="this.tripForm.controls.selected_img.value">
+        <div class="fixed_height">
+          <ngx-avatar src="{{this.my_preview_img}}"></ngx-avatar>
+        </div>
+      </div>
+            <mat-form-field>
             <textarea matInput formControlName="description" placeholder="Description"></textarea>
         </mat-form-field>
         <mat-form-field>

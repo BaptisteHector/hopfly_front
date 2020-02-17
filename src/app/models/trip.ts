@@ -10,4 +10,5 @@ export class Trip {
     ticket_id       : string;
     logement_id     : string;
     plan_id         : number;
+    pic             : string;
 }

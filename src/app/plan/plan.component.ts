@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { Trip, User, Activity, Plan, MBReply, MBFeature } from '../models';
 import { ActivatedRoute, Router } from '@angular/router';
-import {DragDropModule, moveItemInArray, CdkDragDrop, transferArrayItem} from '@angular/cdk/drag-drop';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { TripService, AuthenticationService, PlanService, ActivityService, MapBoxService, UserService, AlertService } from '../services';
 import { first, take, takeUntil } from 'rxjs/operators';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { first, takeUntil, take } from 'rxjs/operators';
 
 import { User, Trip } from '../models';
@@ -10,7 +10,8 @@ import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { MBFeature, MBReply } from '../models/mapbox';
 
 
-@Component({ templateUrl: 'home.component.html' })
+@Component({ templateUrl: 'home.component.html',
+            styleUrls: ['./home.component.css'] })
 export class HomeComponent implements OnInit {
     currentUser: User;
     trips: Trip[];
@@ -57,18 +58,21 @@ export class HomeComponent implements OnInit {
 export class TripDialog {
     currentUser: User
     searchText = '';
+    my_preview_img: '';
     places = new MBReply<MBFeature>();
     tmpUsers = new Array();
     tripForm: FormGroup;
     currentPlace: MBFeature;
+    file: File;
     public filteredUsersMulti: ReplaySubject<User[]> = new ReplaySubject<User[]>(1);
     protected _onDestroy = new Subject<void>();
     private searchPlaceSub: Subscription;
-    private inputWatcher: Subscription;    
+    private inputWatcher: Subscription;
 
     @ViewChild('placeInputSearch', { static: false }) placeInputSearch;
     @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
     @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
+    @ViewChild('fileInput') fileInput: ElementRef;
     constructor(
         private authenticationService: AuthenticationService,
         private formBuilder: FormBuilder,
@@ -89,6 +93,7 @@ export class TripDialog {
                 userMultiFilterCtrl: '',
                 location: '',
                 filterlocation: '',
+                selected_img: '',
                 users: []
             });
         }
@@ -96,6 +101,31 @@ export class TripDialog {
     placeClick(feature) {
         this.currentPlace = feature;
     }
+
+    resetPicture() {
+        console.log(this.my_preview_img)
+        this.tripForm.controls.selected_img.setValue(null);
+        this.my_preview_img = null;
+        this.fileInput.nativeElement.value = '';
+        this.fileInput.nativeElement.classList.remove('active');
+    }
+
+    selectFile(): void {
+        this.fileInput.nativeElement.click();
+    }
+
+    handleFileInput(files: FileList) {
+        console.log(files.item(0))
+        this.tripForm.controls.pic.setValue(files.item(0));
+    }
+
+    onSelectFile(event) {
+        console.log(event.target.result)
+        if(event.target.files && event.target.files.length > 0) {
+          this.file = event.target.files[0];
+          this.tripForm.get('filename').setValue(this.file.name);
+        }
+      }
 
     doSearch() {
         if (!!this.searchPlaceSub) {
@@ -144,12 +174,24 @@ export class TripDialog {
         this._onDestroy.complete();
     }
 
+    readURL(event: any) {
+        this.my_preview_img = null;
+        const file: File = event.target.files[0];
+        const myReader: FileReader = new FileReader();
+        myReader.onloadend = (loadEvent: any) => {
+            console.log(loadEvent.target.result)
+            this.my_preview_img = loadEvent.target.result;
+        };
+
+        myReader.readAsDataURL(file);
+    }
+
     public onSubmit() {
         if (this.tripForm.invalid) {
             return;
         }
-        console.log("LOCATION == " + this.tripForm.controls.filterlocation.value)
         let trip = new Trip()
+        trip.pic = this.my_preview_img
         trip.name = this.tripForm.controls.name.value;
         trip.begin_date = this.tripForm.controls.begin_date.value;
         trip.end_date = this.tripForm.controls.end_date.value;

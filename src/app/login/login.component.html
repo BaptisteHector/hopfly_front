@@ -1,15 +1,24 @@
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="box">
+        <mat-card-header>
+            <mat-card-title>Log in</mat-card-title>
+        </mat-card-header>
+        <form [formGroup]="loginForm" class="example-form" (ngSubmit)="onSubmit()">
+            <mat-card-content>
                 <mat-form-field>
                     <mat-label>Username</mat-label>
-                    <input matInput formControlName="username" />
+                    <input matInput formControlName="username" class="input100"/>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Password</mat-label>
-                    <input matInput type="password" formControlName="password" />
+                    <input matInput type="password" class="input100" formControlName="password" />
                 </mat-form-field>
+            </mat-card-content>
             <button mat-stroked-button color="accent" [disabled]="loading" class="btn-block">
                 <span *ngIf="loading"></span>
                 Login
             </button>
-            <button mat-button routerLink="/register" class="txt2">Register</button>
+            <button mat-button routerLink="/register" class="txt2">I don't have an account yet.</button>
         </form>
+    </mat-card>
+</div>

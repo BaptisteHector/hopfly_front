@@ -32,9 +32,6 @@
         <mat-option>
           <ngx-mat-select-search formControlName="userMultiFilterCtrl"></ngx-mat-select-search>
         </mat-option>
-          <mat-option *ngFor="let user of filteredUsersMulti | async" [value]="user">
-            {{ user.username }}
-          </mat-option>
         </mat-select>
       </mat-form-field>
     <button mat-raised-button type="submit">Create</button>

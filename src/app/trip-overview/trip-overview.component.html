@@ -1,0 +1,17 @@
+<a routerLink="/trip/{{trip.id}}">
+<mat-card class="example-card">
+    <mat-card-header>
+        <ngx-avatar *ngIf="trip.pic else tripname"mat-card-avatar src="{{trip.pic}}"></ngx-avatar>
+        <ng-template #tripname>
+        <ngx-avatar mat-card-avatar name="{{trip.name}}"></ngx-avatar>
+        </ng-template>
+        <mat-card-title>{{trip.name}}</mat-card-title>
+      <mat-card-subtitle>{{trip.begin_date | date:'mediumDate'}} - {{trip.end_date | date:'mediumDate'}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+    <p class="m-4">
+        {{trip.description}}
+    </p>
+    </mat-card-content>
+  </mat-card>
+</a>

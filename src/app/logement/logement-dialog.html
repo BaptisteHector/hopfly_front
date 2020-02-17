@@ -27,15 +27,5 @@
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
-    <mat-form-field>
-        <mat-select formControlName="users" placeholder="Invite friends" [multiple]="true" #multiSelect>
-        <mat-option>
-          <ngx-mat-select-search formControlName="userMultiFilterCtrl"></ngx-mat-select-search>
-        </mat-option>
-          <mat-option *ngFor="let user of filteredUsersMulti | async" [value]="user">
-            {{ user.username }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
     <button mat-raised-button type="submit">Create</button>
 </form>

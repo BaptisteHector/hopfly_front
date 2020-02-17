@@ -14,12 +14,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { AvatarModule } from 'ngx-avatar';
 
-
-
-// used to create fake backend
 import { appRoutingModule } from './app.routing';
-import { JwtInterceptor, ErrorInterceptor } from './helpers';
 import { AppComponent } from './app.component';
 import { HomeComponent, TripDialog } from './home';
 import { LoginComponent } from './login';
@@ -30,10 +27,11 @@ import { TripComponent } from './trip';
 import {MatStepperModule} from '@angular/material/stepper';
 import { PlanComponent, ActivityDialog } from './plan';
 import { ProfileComponent } from './profile/profile.component';
-import { TicketComponent } from './ticket/ticket.component';
-import { LogementComponent } from './logement/logement.component';
+import { TicketComponent, TicketDialog } from './ticket/ticket.component';
+import { LogementComponent, LogementDialog } from './logement/logement.component';
 import { UpdateTripComponent } from './update-trip/update-trip.component';
 import { ProfileUpdateComponent } from './profile-update/profile-update.component';
+import { TripOverviewComponent } from './trip-overview/trip-overview.component';
 
 @NgModule({
     imports: [
@@ -52,16 +50,19 @@ import { ProfileUpdateComponent } from './profile-update/profile-update.componen
         BrowserAnimationsModule,
         BrowserAnimationsModule,
         MatStepperModule,
-        DragDropModule,
         MatIconModule,
         MatCardModule,
-        MatToolbarModule
+        DragDropModule,
+        MatToolbarModule,
+        AvatarModule
     ],
     declarations: [
         AppComponent,
         HomeComponent,
         LoginComponent,
         TripDialog,
+        TicketDialog,
+        LogementDialog,
         ActivityDialog,
         RegisterComponent,
         AlertComponent,
@@ -71,11 +72,14 @@ import { ProfileUpdateComponent } from './profile-update/profile-update.componen
         TicketComponent,
         LogementComponent,
         UpdateTripComponent,
-        ProfileUpdateComponent
+        ProfileUpdateComponent,
+        TripOverviewComponent,
     ],
     entryComponents: [
         ActivityDialog,
-        TripDialog
+        TripDialog,
+        TicketDialog,
+        LogementDialog
     ],
     providers: [
         MatDatepickerModule
