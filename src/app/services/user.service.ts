@@ -84,16 +84,6 @@ export class UserService {
     );
   }
 
-  /** POST: add a new Contact to the server */
-  addContact (Contact: Contact): Observable<Contact> {
-    return this.http.post<Contact>(this.UsersUrl + "/addContact", Contact, this.httpOptions)
-    .pipe(
-      tap((newContact: Contact) => {this.log(`added User w/ id=${newContact.id}`)
-    }),
-      catchError(this.handleError<any>('addContact'))
-    );
-  }
-
   /** DELETE: delete the User from the server */
   deleteUser (User: User | number): Observable<User> {
     const id = typeof User === 'number' ? User : User.id;

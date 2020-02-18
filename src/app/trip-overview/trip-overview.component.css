@@ -8,9 +8,9 @@
 .plx-card {
   transition: all 600ms ease;
   max-width: 60%px;
-  padding-left: 3%;
   display: flex;
   position: relative;
+  justify-content: center;
   overflow: hidden;
   margin: 30px 0;
   filter: drop-shadow(0 2px 1rem #112);

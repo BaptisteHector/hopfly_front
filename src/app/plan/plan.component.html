@@ -1,3 +1,4 @@
+<h1>Make your plan !</h1>
 <form [formGroup]="planForm" (ngSubmit)="onSubmit()">
   <input matInput formControlName="name" *ngIf="trip.plan_id === 0" placeholder="Plan name">
   <h1 formControlName="name" *ngIf="trip.plan_id !== 0">{{plan.name}}</h1>

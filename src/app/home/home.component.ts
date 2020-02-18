@@ -215,7 +215,7 @@ export class TripDialog {
         .subscribe(
         data => {
             this.alertService.success('Trip created', true);
-            this.dialogRef.close();
+            this.dialogRef.close(data);
         },
         error => {
             this.alertService.error(error);

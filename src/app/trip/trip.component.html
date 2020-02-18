@@ -1,15 +1,55 @@
-<p>{{trip.name}}</p>
-<button mat-raised-button (click)="onClickUpdateTrip()">Update</button>
-<button mat-raised-button (click)="onClickManagePlan()">Manage Plan</button>
-<button mat-raised-button (click)="onClickCreateTicket()">Ticket Informations</button>
-<button mat-raised-button (click)="onClickCreateLogement()">Accomodation Informations</button>
-<mat-vertical-stepper *ngIf="activities" #stepper>
-    <div *ngFor="let activity of activities">
-    <mat-step @fadeAnimation>
-        <ng-template matStepperIcon="" matStepLabel>{{activity.name}}</ng-template>
-        <div>
-            {{ activity.description }}
+<div class="Profile">
+<div class="container">
+    <img *ngIf="trip.pic else tripname" class="profile-pic" src="{{trip.pic}}">
+    <ng-template #tripname>
+        <img name="{{trip.name}}" class="profile-pic">
+    </ng-template>
+    <h2>{{trip.name}}</h2>
+    <h4>{{trip.begin_date | date:'mediumDate'}} - {{trip.end_date | date:'mediumDate'}}</h4>
+    <h3>{{trip.description}}</h3>
+    <div class="bottom-row"> 
+        <div class="pxc-info">
+            <li class="userlist" *ngFor="let user of guest">
+                <ngx-avatar *ngIf="user.pic else guestname" size="40" mat-card-avatar src="{{user.pic}}"></ngx-avatar>
+                <ng-template #guestname>
+                <ngx-avatar mat-card-avatar size="40" name="{{user.username}}"></ngx-avatar>
+                </ng-template>
+            </li>
         </div>
-    </mat-step>
+      </div>
+      <div class="bottom-row my-icon"> 
+        <div class="pxc-btn">
+<button mat-icon-button color="primary" (click)="onClickUpdateTrip()"><mat-icon>edit</mat-icon></button>
+<button mat-icon-button color="primary" (click)="onClickManagePlan()"><mat-icon>event</mat-icon></button>
+<button mat-icon-button color="primary" (click)="onClickCreateTicket()"><mat-icon>commute</mat-icon></button>
+<button mat-icon-button color="primary" (click)="onClickCreateLogement()"><mat-icon>home</mat-icon></button>
+</div>
+</div>
+</div>
+</div>
+<div class="timeline">
+    <li *ngFor="let activity of this.activities">
+    <div class="time-container left">
+        <div class="ft-recipe"> 
+              <img src="../../assets/defaultActivity.jpg" alt="Strawberry Waffle"/>
+            <div class="ft-recipe__content">
+              <header class="content__header">
+                <div class="row-wrapper">
+                  <h2 class="recipe-title">{{activity.name}}</h2>
+                  <div class="user-rating"></div>
+                </div>
+                <ul class="recipe-details">
+                  <li class="recipe-details-item time"><mat-icon color="primary" class="ion ion-ios-person-outline">how_to_reg</mat-icon><span class="value">{{activity.amount_mark}}</span></li>
+                  <li class="recipe-details-item servings"><mat-icon color="primary" class="ion ion-ios-person-outline">euro_symbol</mat-icon><span class="value">{{activity.price}}</span></li>
+                </ul>
+              </header>
+              <p class="description">
+                 {{activity.description}}</p>
+              <footer class="content__footer"><div class="rating">
+                <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                </div></footer>
+            </div>
+        </div>
     </div>
-  </mat-vertical-stepper>
+    </li>
+</div>

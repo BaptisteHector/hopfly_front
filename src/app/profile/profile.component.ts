@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { User, Contact } from '../models';
-import { AuthenticationService, UserService, AlertService } from '../services';
+import { AuthenticationService, UserService, AlertService, ContactService } from '../services';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReplaySubject, Subscription, Subject } from 'rxjs';
@@ -39,6 +39,7 @@ export class ContactDialog {
       private authenticationService: AuthenticationService,
       private formBuilder: FormBuilder,
       private userService: UserService,
+      private contactService: ContactService,
       private alertService: AlertService,
       public dialogRef: MatDialogRef<ContactDialog>,
       @Inject(MAT_DIALOG_DATA) public data: Contact)
@@ -71,7 +72,7 @@ export class ContactDialog {
       contact.email = this.contactForm.controls.email.value;
       contact.phone = this.contactForm.controls.phone.value;
       if (!contact) { return; }      
-      this.userService.addContact(contact)
+      this.contactService.addContact(contact)
       .subscribe(
       data => {
           this.alertService.success('Contact created', true);

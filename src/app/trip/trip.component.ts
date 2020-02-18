@@ -16,6 +16,7 @@ export class TripComponent implements OnInit {
   @Input() trip: Trip;
   currentUser: User;
   activities: Activity[];
+  guest: User[]
   plan: Plan;
 
 
@@ -40,6 +41,7 @@ export class TripComponent implements OnInit {
     this.tripService.getTrip(id)
     .subscribe(trip => {this.trip = trip
       this.loadPlan();
+      this.loadUsers();
     });
   }
 
@@ -54,6 +56,14 @@ export class TripComponent implements OnInit {
       );
   }
 
+  public loadUsers() {
+    this.tripService.getTripUsers(this.trip.user_id)
+    .pipe(first())
+    .subscribe(users => {
+        this.guest = users
+    });
+  }
+
   public loadActivities() {
     if (this.trip.plan_id === 0) {
       return ;
@@ -61,9 +71,9 @@ export class TripComponent implements OnInit {
     this.planService.getPlanActivities(this.plan.activities)
     .pipe(first())
     .subscribe(activities => {
-      console.log(activities)
         this.activities = activities
-    });
+        console.log(this.activities)
+      });
   }
 
   // Button Management

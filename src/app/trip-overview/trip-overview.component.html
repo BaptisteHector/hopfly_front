@@ -9,7 +9,7 @@
       <div class="bottom-row"> 
         <div class="pxc-info">
             <li class="userlist" *ngFor="let user of guest">
-                <ngx-avatar *ngIf="user.pic else guestname" size="20" mat-card-avatar src="{{user.pic}}"></ngx-avatar>
+                <ngx-avatar *ngIf="user.pic else guestname" size="25" mat-card-avatar src="{{user.pic}}"></ngx-avatar>
                 <ng-template #guestname>
                 <ngx-avatar mat-card-avatar size="25" name="{{user.username}}"></ngx-avatar>
                 </ng-template>
