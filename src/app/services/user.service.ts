@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { User, Trip } from '../models';
+import { User, Trip, Contact } from '../models';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -81,6 +81,16 @@ export class UserService {
     .pipe(
       tap((newUser: User) => this.log(`added User w/ id=${newUser.id}`)),
       catchError(this.handleError<any>('registerUser'))
+    );
+  }
+
+  /** POST: add a new Contact to the server */
+  addContact (Contact: Contact): Observable<Contact> {
+    return this.http.post<Contact>(this.UsersUrl + "/addContact", Contact, this.httpOptions)
+    .pipe(
+      tap((newContact: Contact) => {this.log(`added User w/ id=${newContact.id}`)
+    }),
+      catchError(this.handleError<any>('addContact'))
     );
   }
 

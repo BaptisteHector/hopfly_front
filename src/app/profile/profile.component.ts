@@ -72,7 +72,16 @@ export class ContactDialog {
       .subscribe(
       data => {
           this.alertService.success('Contact created', true);
-          this.dialogRef.close();
+          this.currentUser.contact_id += data.id + ','
+          this.userService.updateUser(this.currentUser)
+          .subscribe(
+            data => {
+                this.alertService.success('Contact created', true);
+                this.dialogRef.close();
+            },
+            error => {
+                this.alertService.error(error);
+            });
       },
       error => {
           this.alertService.error(error);
