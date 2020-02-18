@@ -5,6 +5,9 @@
       display: flex;
       place-content: center;
       align-items: center;
+      background-image: url(../../assets/defaultLog.jpg);
+      background-repeat: no-repeat;
+      background-size: 100%;
   }
 
   .title {
@@ -15,6 +18,10 @@
     text-decoration: none;
     color: #ffffff;
   }
+
+  .mypic {
+    height: 300px
+}
   
   .box {
     position: relative;

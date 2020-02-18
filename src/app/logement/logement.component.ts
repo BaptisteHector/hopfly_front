@@ -154,8 +154,8 @@ export class LogementDialog {
       if (this.logementForm.invalid) {
           return;
       }
-      this.logement.start_date = this.logementForm.controls.dep_date.value;
-      this.logement.end_date = this.logementForm.controls.arr_date.value;
+      this.logement.start_date = this.logementForm.controls.start_date.value;
+      this.logement.end_date = this.logementForm.controls.end_date.value;
       this.logement.adress = this.logementForm.controls.adress.value;
       this.logement.location = this.locPlace.center[0] + ',' + this.locPlace.center[1];
       this.logement.phone = this.logementForm.controls.phone.value;

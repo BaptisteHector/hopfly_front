@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Add new contact</h1>
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <input matInput formControlName="firstname" placeholder="Firstname">
+        </mat-form-field>
+        <mat-form-field>
+            <textarea matInput formControlName="lastname" placeholder="Lastname"></textarea>
+        </mat-form-field>
+                  <mat-form-field>
+                    <input matInput formControlName="adress" placeholder="Full Adress">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput formControlName="phone" placeholder="Phone Number">
+                </mat-form-field>
+    <button mat-raised-button type="submit">Add</button>
+</form>

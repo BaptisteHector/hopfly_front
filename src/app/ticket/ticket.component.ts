@@ -18,8 +18,6 @@ export class TicketComponent implements OnInit {
 
   @Input() trip: Trip;
   currentUser: User;
-  planActivities: Activity[] = [];
-  activities: Activity[];
   tickets: Ticket[];
 
 
@@ -42,9 +40,9 @@ export class TicketComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      let ret: Activity = result;
+      let ret: Ticket = result;
       if (result)
-        this.planActivities.push(ret);
+        this.tickets.push(ret);
     });
   }
 

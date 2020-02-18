@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
         });
     
         dialogRef.afterClosed().subscribe(result => {
-          this.loadAllTrip()
+          this.trips.push(result)
         });
       }
 
