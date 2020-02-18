@@ -27,7 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TripComponent } from './trip';
 import {MatStepperModule} from '@angular/material/stepper';
 import { PlanComponent, ActivityDialog } from './plan';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent, ContactDialog, FriendDialog } from './profile/profile.component';
 import { TicketComponent, TicketDialog } from './ticket/ticket.component';
 import { LogementComponent, LogementDialog } from './logement/logement.component';
 import { UpdateTripComponent } from './update-trip/update-trip.component';
@@ -63,6 +63,8 @@ import { TripOverviewComponent } from './trip-overview/trip-overview.component';
         HomeComponent,
         LoginComponent,
         TripDialog,
+        ContactDialog,
+        FriendDialog,
         TicketDialog,
         LogementDialog,
         ActivityDialog,
@@ -80,6 +82,8 @@ import { TripOverviewComponent } from './trip-overview/trip-overview.component';
     entryComponents: [
         ActivityDialog,
         TripDialog,
+        ContactDialog,
+        FriendDialog,
         TicketDialog,
         LogementDialog
     ],
