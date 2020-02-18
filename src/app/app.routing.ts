@@ -6,6 +6,11 @@ import { RegisterComponent } from './register';
 import { AuthGuard } from './helpers';
 import { TripComponent } from './trip';
 import { PlanComponent } from './plan';
+import { UpdateTripComponent } from './update-trip/update-trip.component';
+import { TicketComponent } from './ticket/ticket.component';
+import { LogementComponent } from './logement/logement.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileUpdateComponent } from './profile-update/profile-update.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -13,11 +18,11 @@ const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'trip/:id', component: TripComponent },
     { path: 'plan/:id', component: PlanComponent },
-    { path: 'trip/update/:id', component: PlanComponent },
-    { path: 'trip/tickets/:id', component: PlanComponent },
-    { path: 'trip/logement/:id', component: PlanComponent },
-    { path: 'profile/:id', component: PlanComponent },
-    { path: 'profile/update/:id', component: PlanComponent },
+    { path: 'trip/update/:id', component: UpdateTripComponent },
+    { path: 'trip/tickets/:id', component: TicketComponent },
+    { path: 'trip/logement/:id', component: LogementComponent },
+    { path: 'profile/:id', component: ProfileComponent },
+    { path: 'profile/update/:id', component: ProfileUpdateComponent },
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
