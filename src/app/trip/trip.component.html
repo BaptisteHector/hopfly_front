@@ -2,7 +2,7 @@
 <div class="container">
     <img *ngIf="trip.pic else tripname" class="profile-pic" src="{{trip.pic}}">
     <ng-template #tripname>
-        <img name="{{trip.name}}" class="profile-pic">
+        <img src="../../assets/defaultTrip.jpg" class="profile-pic">
     </ng-template>
     <h2>{{trip.name}}</h2>
     <h4>{{trip.begin_date | date:'mediumDate'}} - {{trip.end_date | date:'mediumDate'}}</h4>
@@ -28,9 +28,9 @@
 </div>
 </div>
 <div class="timeline">
-    <li *ngFor="let activity of this.activities">
-    <div class="time-container left">
-        <div class="ft-recipe"> 
+    <li *ngFor="let activity of this.activities" id="ordered">
+    <div ngClass="{{id%2==0 ? 'time-container right' : 'time-container left'}}">
+        <div class="ft-recipe">
               <img src="../../assets/defaultActivity.jpg" alt="Strawberry Waffle"/>
             <div class="ft-recipe__content">
               <header class="content__header">
