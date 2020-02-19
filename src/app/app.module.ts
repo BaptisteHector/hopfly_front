@@ -34,6 +34,8 @@ import { UpdateTripComponent } from './update-trip/update-trip.component';
 import { ProfileUpdateComponent } from './profile-update/profile-update.component';
 import { TripOverviewComponent } from './trip-overview/trip-overview.component';
 import { ActivityOverviewComponent } from './activity-overview/activity-overview.component';
+import { FriendOverviewComponent } from './friend-overview/friend-overview.component';
+import { ContactOverviewComponent } from './contact-overview/contact-overview.component';
 
 @NgModule({
     imports: [
@@ -80,6 +82,8 @@ import { ActivityOverviewComponent } from './activity-overview/activity-overview
         ProfileUpdateComponent,
         TripOverviewComponent,
         ActivityOverviewComponent,
+        FriendOverviewComponent,
+        ContactOverviewComponent,
     ],
     entryComponents: [
         ActivityDialog,

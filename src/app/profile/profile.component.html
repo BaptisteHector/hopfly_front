@@ -15,3 +15,13 @@
     </div>
     </div>
     </div>
+<div>
+  <h1>Friends</h1>
+  <li *ngFor="let user of friends">
+    <app-friend-overview [user]="user"></app-friend-overview>
+  </li>
+  <h1>Contacts</h1>
+  <li *ngFor="let contact of contacts">
+    <app-contact-overview [contact]="contact"></app-contact-overview>
+  </li>
+</div>
