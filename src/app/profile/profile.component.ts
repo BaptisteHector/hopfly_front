@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { User, Contact } from '../models';
 import { AuthenticationService, UserService, AlertService, ContactService } from '../services';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { ReplaySubject, Subscription, Subject } from 'rxjs';
 import { takeUntil, first, take } from 'rxjs/operators';
 import { MatSelect } from '@angular/material/select';
@@ -14,16 +14,50 @@ import { MatSelect } from '@angular/material/select';
 })
 export class ProfileComponent implements OnInit {
   currentUser: User;
+  friends: User[];
+  contacts: Contact[]
 
   constructor(
     private authenticationService: AuthenticationService,
-    private userService: UserService
+    private userService: UserService,
+    public dialog: MatDialog,
   ) {
     this.currentUser = this.authenticationService.currentUserValue;
   }
 
   ngOnInit() {
   }
+
+  onClickCreateFriend() {
+    const dialogRef = this.dialog.open(FriendDialog, {
+      width: '20%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      let ret: User[] = result;
+      if (result)
+      {
+        ret.forEach(user => {
+          this.friends.push(user);
+        })
+      }
+    });
+  }
+
+  onClickCreateContact() {
+    const dialogRef = this.dialog.open(ContactDialog, {
+      width: '20%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      let ret: Contact = result;
+      if (result)
+      {
+          this.contacts.push(ret);
+      }
+    });
+  }
+
 
 }
 
@@ -195,7 +229,7 @@ protected filterUsersMulti() {
         .subscribe (
           data => {
             this.alertService.success('Friend added', true);
-            this.dialogRef.close();
+            this.dialogRef.close(users);
           },
           error => {
             this.alertService.error(error);

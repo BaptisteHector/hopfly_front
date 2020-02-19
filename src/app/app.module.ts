@@ -33,6 +33,7 @@ import { LogementComponent, LogementDialog } from './logement/logement.component
 import { UpdateTripComponent } from './update-trip/update-trip.component';
 import { ProfileUpdateComponent } from './profile-update/profile-update.component';
 import { TripOverviewComponent } from './trip-overview/trip-overview.component';
+import { ActivityOverviewComponent } from './activity-overview/activity-overview.component';
 
 @NgModule({
     imports: [
@@ -78,6 +79,7 @@ import { TripOverviewComponent } from './trip-overview/trip-overview.component';
         UpdateTripComponent,
         ProfileUpdateComponent,
         TripOverviewComponent,
+        ActivityOverviewComponent,
     ],
     entryComponents: [
         ActivityDialog,
