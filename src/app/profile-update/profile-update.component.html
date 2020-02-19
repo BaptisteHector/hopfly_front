@@ -1,1 +1,33 @@
-<p>profile-update works!</p>
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+<div class="Profile">
+    <div class="container">
+        <ngx-avatar mat-card-avatar *ngIf="currentUser.pic else username" class="profile-pic" src="{{currentUser.pic}}"></ngx-avatar>
+        <ng-template #username>
+            <ngx-avatar mat-card-avatar name="{{currentUser.username}}" class="profile-pic"></ngx-avatar>
+        </ng-template>
+        <div class="row ">
+            <div class="file-field input-field">
+                <div class="btn">
+                    <input formControlName="selected_img" type="file" name="image" class="btn teal"
+                           (change)="readURL($event);"/>
+                </div>
+            </div>
+        </div>
+        <mat-form-field>
+            <input matInput formControlName="username" placeholder="Username">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput formControlName="email" placeholder="Email">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="password" formControlName="password" placeholder="Password">
+        </mat-form-field>
+          <div class="bottom-row my-icon"> 
+            <div class="pxc-btn">
+    <button mat-raised-button color="primary" type="submit">Save</button>
+    <button mat-raised-button color="primary" (click)="onClickCancel()">Cancel</button>
+    </div>
+    </div>
+    </div>
+</div>
+</form>

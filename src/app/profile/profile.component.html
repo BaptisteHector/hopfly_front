@@ -1,9 +1,9 @@
 <p>{{ this.currentUser.username }}</p>
 <div class="Profile">
     <div class="container">
-        <img *ngIf="currentUser.pic else username" class="profile-pic" src="{{currentUser.pic}}">
+        <ngx-avatar mat-card-avatar *ngIf="currentUser.pic else username" class="profile-pic" src="{{currentUser.pic}}"></ngx-avatar>
         <ng-template #username>
-            <img src="../../assets/defaultTrip.jpg" class="profile-pic">
+            <ngx-avatar mat-card-avatar name="{{currentUser.username}}" class="profile-pic"></ngx-avatar>
         </ng-template>
         <h2>{{currentUser.username}}</h2>
         <h4>{{currentUser.email}}</h4>

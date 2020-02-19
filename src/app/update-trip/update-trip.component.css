@@ -4,3 +4,73 @@
     text-align: center;
     color: white;
 }
+
+* {
+    box-sizing: border-box;
+  }
+  
+  .Profile {
+    padding-top: 120px;
+    text-align: center;
+    text-align: -webkit-center;
+    height: 100%;
+  }
+  
+  .bottom-row {
+    flex: 0 1 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    place-content: center;
+  }
+  
+  .bottom-row .pxc-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 50%;
+  }
+  
+  .bottom-row .pxc-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    padding-top: 40px;
+  }
+  
+  .profile-pic {
+    position: relative;
+      width: 80%;
+      top: -7vh;
+      border-radius: inherit;
+    filter: drop-shadow(0 0 0.2rem black);
+  }
+  
+  body {
+      font-family: roboto;
+    }
+    .container {
+      width: 50%;
+      background-color: #fff;
+      margin-top: 50px;
+      padding: 0 40px 0;
+      border-radius: 6px;
+      -webkit-border-radius: 6px;
+      -moz-border-radius: 6px;
+      text-align: center;
+    }
+  
+    h2 {
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #333;
+      margin-top: 0;
+    }
+    h4 {
+      font-size: 13px;
+      color: #00baff;
+      letter-spacing: 1px;
+      margin-bottom: 25px
+    }
