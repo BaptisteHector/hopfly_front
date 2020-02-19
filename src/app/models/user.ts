@@ -7,4 +7,5 @@ export class User {
     email       : string;
     contact_id  : string;
     friend_id   : string;
+    pic         : string;
 }
