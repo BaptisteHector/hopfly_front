@@ -96,7 +96,7 @@ export class ActivityService {
 
   /** PUT: update the Activity on the server */
   updateActivity (Activity: Activity): Observable<any> {
-    return this.http.put(this.ActivitiesUrl, Activity, this.httpOptions).pipe(
+    return this.http.put(this.ActivitiesUrl + "/update/" + Activity.id.toString(), Activity, this.httpOptions).pipe(
       tap(_ => this.log(`updated Activity id=${Activity.id}`)),
       catchError(this.handleError<any>('updateActivity'))
     );

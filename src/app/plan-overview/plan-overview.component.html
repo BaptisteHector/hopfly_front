@@ -1,0 +1,17 @@
+<div class="plx-card silver">
+    <div class="pxc-avatar"><img src="../../assets/planIcon.png"/></div>
+  <div class="pxc-subcard">
+    <div class="pxc-title">{{plan.name}}</div>
+    <div class="pxc-sub"> {{plan.location}}</div>
+    <div class="bottom-row"> 
+      <ul class="recipe-details">
+          <li class="recipe-details-item time"><mat-icon color="primary" class="ion ion-ios-person-outline">stars</mat-icon><span class="value">{{plan.mark}}</span></li>
+          <li class="recipe-details-item servings"><mat-icon color="primary" class="ion ion-ios-person-outline">how_to_reg</mat-icon><span class="value">{{plan.amount_mark}}</span></li>
+          <li class="recipe-details-item servings"><mat-icon color="primary" class="ion ion-ios-person-outline">local_activity</mat-icon><span class="value">{{amount_activity}}</span></li>
+        </ul>
+    </div>
+    <button mat-raised-button color="primary" (click)="onClickPlan()">
+        Choose this plan!
+    </button>
+  </div>
+</div>

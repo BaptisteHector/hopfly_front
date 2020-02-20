@@ -5,7 +5,7 @@ import { User, Trip } from '../models';
 import { MapBoxService, UserService, AuthenticationService, TripService, AlertService } from '../services';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelect } from '@angular/material/select';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { MBFeature, MBReply } from '../models/mapbox';
 import { fadeAnimation } from '../utils/animation';
@@ -16,7 +16,7 @@ import { fadeAnimation } from '../utils/animation';
             animations: [fadeAnimation] })
 export class HomeComponent implements OnInit {
     currentUser: User;
-    trips: Trip[];
+    trips: Trip[] = [];
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -32,7 +32,8 @@ export class HomeComponent implements OnInit {
         });
     
         dialogRef.afterClosed().subscribe(result => {
-          this.trips.push(result)
+            if (result)
+            this.trips.push(result)
         });
       }
 
@@ -89,12 +90,17 @@ export class TripDialog {
             this.currentUser = this.authenticationService.currentUserValue;
             
             this.tripForm = this.formBuilder.group({
-                name: '',
-                begin_date: '',
-                end_date: '',
-                description: '',
+                name: new FormControl('', [
+                    Validators.required]),
+                begin_date: new FormControl('', [
+                    Validators.required]),
+                end_date: new FormControl('', [
+                    Validators.required]),
+                description: new FormControl('', [
+                    Validators.required]),
                 userMultiFilterCtrl: '',
-                location: '',
+                location: new FormControl('', [
+                    Validators.required]),
                 filterlocation: '',
                 selected_img: '',
                 users: []
@@ -199,7 +205,7 @@ export class TripDialog {
         trip.begin_date = this.tripForm.controls.begin_date.value;
         trip.end_date = this.tripForm.controls.end_date.value;
         trip.description = this.tripForm.controls.description.value;
-        trip.location = this.currentPlace.center[0] + ',' + this.currentPlace.center[1];
+        trip.location = this.currentPlace.place_name
         if (!trip) { return; }
         let user_id: string = this.currentUser.id.toString() + ',';
         let users: User[] = this.tripForm.controls.users.value;

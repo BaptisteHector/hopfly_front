@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
 import { Trip, User, Activity, Plan, Logement, MBReply, MBFeature } from '../models';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TripService, PlanService, ActivityService, AuthenticationService, AlertService, MapBoxService, LogementService } from '../services';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -8,26 +8,26 @@ import { MatSelect } from '@angular/material/select';
 import { ActivityDialog } from '../plan';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
+import { fadeAnimation } from '../utils/animation';
 
 @Component({
   selector: 'app-logement',
   templateUrl: './logement.component.html',
-  styleUrls: ['./logement.component.css']
+  styleUrls: ['./logement.component.css'],
+  animations: [fadeAnimation]
 })
 export class LogementComponent implements OnInit {
 
   @Input() trip: Trip;
   currentUser: User;
-  planActivities: Activity[] = [];
-  activities: Activity[];
-  logements: Logement[];
+  logements: Logement[] = [];
 
 
   constructor(private route: ActivatedRoute,
     private tripService: TripService,
     private authenticationService: AuthenticationService,
+    private alertService: AlertService,
     public dialog: MatDialog,
-    private router: Router
     ) {
       this.currentUser = this.authenticationService.currentUserValue;
   }
@@ -38,13 +38,25 @@ export class LogementComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(LogementDialog, {
-      width: '250px'
+      width: '70%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      let ret: Activity = result;
-      if (result)
-        this.planActivities.push(ret);
+      let ret: Logement = result;
+      if (result) {
+        if (this.trip.logement_id == null)
+        this.trip.logement_id = ret.id + ','
+      else
+        this.trip.logement_id += ret.id + ','
+      this.tripService.updateTrip(this.trip)
+      .subscribe(
+        data => {
+            this.alertService.success('Contact created', true);
+        },
+        error => {
+            this.alertService.error(error);
+        });        this.logements.push(ret);
+      }
     });
   }
 
@@ -59,6 +71,8 @@ export class LogementComponent implements OnInit {
   }
 
   public loadLogements() {
+    if (this.trip.logement_id === null)
+      return
     this.tripService.getTripLogements(this.trip.logement_id)
     .pipe(first())
     .subscribe(logements => {
@@ -82,8 +96,6 @@ export class LogementDialog {
   private inputWatcher: Subscription;    
 
   @ViewChild('placeInputSearch') placeInputSearch;
-  @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
-  @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
   constructor(
       private authenticationService: AuthenticationService,
       private formBuilder: FormBuilder,
@@ -96,12 +108,16 @@ export class LogementDialog {
           this.currentUser = this.authenticationService.currentUserValue;
           
           this.logementForm = this.formBuilder.group({
-              location: '',
-              adress: '',
-              start_date: '',
-              end_date: '',
-              phone: '',
-              name: '',
+              location: new FormControl('', [
+                Validators.required]),
+              start_date: new FormControl('', [
+                Validators.required]),
+              end_date: new FormControl('', [
+                Validators.required]),
+              phone: new FormControl('', [
+                Validators.required]),
+              name: new FormControl('', [
+                Validators.required]),
               filterlocation: ''
           });
       }
@@ -156,8 +172,7 @@ export class LogementDialog {
       }
       this.logement.start_date = this.logementForm.controls.start_date.value;
       this.logement.end_date = this.logementForm.controls.end_date.value;
-      this.logement.adress = this.logementForm.controls.adress.value;
-      this.logement.location = this.locPlace.center[0] + ',' + this.locPlace.center[1];
+      this.logement.location = this.locPlace.place_name
       this.logement.phone = this.logementForm.controls.phone.value;
       this.logement.name = this.logementForm.controls.name.value;
       if (!this.logement) { return; }
@@ -165,8 +180,7 @@ export class LogementDialog {
       .subscribe(
       data => {
           this.alertService.success('Logement created', true);
-          this.logement = data;
-          this.dialogRef.close(this.logement);
+          this.dialogRef.close(data);
       },
       error => {
           this.alertService.error(error);

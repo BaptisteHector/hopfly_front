@@ -1,1 +1,22 @@
-<p>activity-overview works!</p>
+<div class="ft-recipe">
+
+  <img *ngIf="activity.pic else defaultpic" src="{{activity.pic}}">
+        <ng-template #defaultpic>
+          <img src="../../assets/defaultActivity.jpg" alt="Strawberry Waffle"/>
+        </ng-template>
+          <div class="ft-recipe__content">
+          <header class="content__header">
+            <div class="row-wrapper">
+              <h2 class="recipe-title">{{activity.name}}</h2>
+              <div class="user-rating"></div>
+            </div>
+            <ul class="recipe-details">
+              <li class="recipe-details-item time"><mat-icon color="primary" class="ion ion-ios-person-outline">how_to_reg</mat-icon><span class="value">{{activity.amount_mark}}</span></li>
+              <li class="recipe-details-item servings"><mat-icon color="primary" class="ion ion-ios-person-outline">euro_symbol</mat-icon><span class="value">{{activity.price}}</span></li>
+              <li class="recipe-details-item time"><mat-icon color="primary" class="ion ion-ios-person-outline">stars</mat-icon><span class="value">{{activity.mark}}</span></li>
+            </ul>
+          </header>
+          <p class="description">
+             {{activity.description}}</p>
+        </div>
+    </div>

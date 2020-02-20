@@ -1,9 +1,9 @@
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
 <div class="Profile">
     <div class="container">
-        <ngx-avatar mat-card-avatar *ngIf="currentUser.pic else username" class="profile-pic" src="{{currentUser.pic}}"></ngx-avatar>
+        <img *ngIf="currentUser.pic else username" class="profile-pic" src="{{currentUser.pic}}">
         <ng-template #username>
-            <ngx-avatar mat-card-avatar name="{{currentUser.username}}" class="profile-pic"></ngx-avatar>
+            <img src="../../assets/defaultUser.png" class="profile-pic">
         </ng-template>
         <div class="row ">
             <div class="file-field input-field">

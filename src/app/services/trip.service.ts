@@ -122,7 +122,7 @@ export class TripService {
 
   /** PUT: update the Trip on the server */
   updateTrip (Trip: Trip): Observable<any> {
-    return this.http.put(this.TripsUrl, Trip, this.httpOptions).pipe(
+    return this.http.put(this.TripsUrl + "/update/" + Trip.id.toString(), Trip, this.httpOptions).pipe(
       tap(_ => this.log(`updated Trip id=${Trip.id}`)),
       catchError(this.handleError<any>('updateTrip'))
     );

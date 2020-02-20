@@ -4,3 +4,16 @@
     text-align: center;
     color: white;
 }
+
+.createBtn {
+    text-align: center;
+}
+
+.overview {
+    text-align: -webkit-center;
+}
+
+.mylist {
+    padding-left: 5%;
+    padding-bottom: 2%;
+}

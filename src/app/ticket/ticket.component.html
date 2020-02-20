@@ -1,5 +1,8 @@
-<h1>Hi {{trip.name}}!</h1>
-<button mat-raised-button (click)="openDialog()">Create Trip</button>
+<h1 class="title">My Tickets!
+</h1>
+<div class="createBtn">
+<button mat-raised-button color="primary" (click)="openDialog()">Add Ticket</button>
+</div>
 <li *ngFor="let ticket of tickets">
-    <span>{{ trip.name }} / {{ trip.description }}</span>
+    <app-ticket-overview class="mylist" @fadeAnimation [ticket]='ticket'></app-ticket-overview>
 </li>

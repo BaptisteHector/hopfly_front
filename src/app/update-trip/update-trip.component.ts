@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { User, MBReply, MBFeature, Trip } from '../models';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
 import { AuthenticationService, UserService, AlertService, TripService, MapBoxService } from '../services';
@@ -25,7 +25,7 @@ export class UpdateTripComponent implements OnInit {
     currentPlace: MBFeature;
     file: File;
     trip: Trip;
-    guest: User[];
+    guest: User[] = [];
     public filteredUsersMulti: ReplaySubject<User[]> = new ReplaySubject<User[]>(1);
     protected _onDestroy = new Subject<void>();
     private searchPlaceSub: Subscription;
@@ -47,14 +47,14 @@ export class UpdateTripComponent implements OnInit {
         {
             this.currentUser = this.authenticationService.currentUserValue;            
             this.tripUpdateForm = this.formBuilder.group({
-                name: this.trip.name,
-                begin_date: this.trip.begin_date,
-                end_date: this.trip.end_date,
-                description: this.trip.description,
+                name: ['', Validators.required],
+                begin_date: ['', Validators.required],
+                end_date: ['', Validators.required],
+                description: ['', Validators.required],
                 userMultiFilterCtrl: '',
-                location: this.trip.location,
+                location: ['', Validators.required],
                 filterlocation: '',
-                selected_img: this.trip.pic,
+                selected_img: '',
                 users: []
             });
         }
@@ -115,6 +115,11 @@ export class UpdateTripComponent implements OnInit {
       this.tripService.getTrip(id)
       .subscribe(trip => {this.trip = trip
         this.loadUsers();
+        this.tripUpdateForm.controls.name.setValue(trip.name)
+        this.tripUpdateForm.controls.begin_date.setValue(trip.begin_date)
+        this.tripUpdateForm.controls.description.setValue(trip.description)
+        this.tripUpdateForm.controls.end_date.setValue(trip.end_date)
+        this.tripUpdateForm.controls.selected_img.setValue(trip.pic)
       });
     }
   
@@ -168,14 +173,12 @@ export class UpdateTripComponent implements OnInit {
         if (this.tripUpdateForm.invalid) {
             return;
         }
-        let trip = new Trip()
-        trip.pic = this.my_preview_img
-        trip.name = this.tripUpdateForm.controls.name.value;
-        trip.begin_date = this.tripUpdateForm.controls.begin_date.value;
-        trip.end_date = this.tripUpdateForm.controls.end_date.value;
-        trip.description = this.tripUpdateForm.controls.description.value;
-        trip.location = this.currentPlace.center[0] + ',' + this.currentPlace.center[1];
-        if (!trip) { return; }
+        this.trip.pic = this.my_preview_img
+        this.trip.name = this.tripUpdateForm.controls.name.value;
+        this.trip.begin_date = this.tripUpdateForm.controls.begin_date.value;
+        this.trip.end_date = this.tripUpdateForm.controls.end_date.value;
+        this.trip.description = this.tripUpdateForm.controls.description.value;
+        this.trip.location = this.trip.location
         let user_id: string = this.currentUser.id.toString() + ',';
         let users: User[] = this.tripUpdateForm.controls.users.value;
         if (users){
@@ -183,17 +186,18 @@ export class UpdateTripComponent implements OnInit {
             user_id += element.id.toString() + ',';
         });
         }
-        trip.user_id = user_id;
-        console.log(trip.user_id);
+        this.trip.user_id = user_id;
         
-        this.tripService.updateTrip(trip)
+        this.tripService.updateTrip(this.trip)
         .subscribe(
         data => {
-            this.alertService.success('Trip updted', true);
+            this.alertService.success('Trip updated', true);
+            this._location.back();
         },
         error => {
             this.alertService.error(error);
         });
+
       }
 
     private loadAllUsers() {

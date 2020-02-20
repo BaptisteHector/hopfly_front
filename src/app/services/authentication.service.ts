@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 import { User } from '../models';
 
@@ -21,6 +22,15 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
+    update() {
+        this.http.get<User>(this.UsersUrl + '/' + this.currentUserSubject.value.id.toString())
+            .pipe(map(user => {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                this.currentUserSubject.next(user);
+                return user;
+            }));
+    }
+
     login(username, password) {
         return this.http.post<User>(this.UsersUrl + '/login', { username, password })
             .pipe(map(user => {
@@ -28,12 +38,23 @@ export class AuthenticationService {
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
                 return user;
-            }));
+            }),
+            catchError(error => this.handleError(error)));
     }
 
     logout() {
         // remove user from local storage and set current user to null
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
+    }
+
+     /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  private handleError(error: Response | any) {
+    return throwError(error); // <= B
     }
 }

@@ -37,6 +37,22 @@ export class UserService {
       );
   }
 
+  getUserFriends(id: string): Observable<User[]> {
+    return this.http.get<User[]>(this.UsersUrl + '/GetUserFriends/' + id)
+      .pipe(
+        tap(_ => this.log('fetched Friends')),
+        catchError(this.handleError<User[]>('getFriends', []))
+      );
+  }
+
+  getUserContacts(id: string): Observable<Contact[]> {
+    return this.http.get<Contact[]>(this.UsersUrl + '/GetUserContacts/' + id)
+      .pipe(
+        tap(_ => this.log('fetched Contacts')),
+        catchError(this.handleError<Contact[]>('getContacts', []))
+      );
+  }
+
   /** GET User by id. Return `undefined` when id not found */
   getUserNo404<Data>(id: string): Observable<User> {
     const url = `${this.UsersUrl}/?id=${id}`;
@@ -96,8 +112,8 @@ export class UserService {
   }
 
   /** PUT: update the User on the server */
-  updateUser (User: User): Observable<any> {
-    return this.http.put(this.UsersUrl, User, this.httpOptions).pipe(
+  updateUser (User: User, id: number): Observable<any> {
+    return this.http.put(this.UsersUrl + '/update/' + id.toString(), User, this.httpOptions).pipe(
       tap(_ => this.log(`updated User id=${User.id}`)),
       catchError(this.handleError<any>('updateUser'))
     );

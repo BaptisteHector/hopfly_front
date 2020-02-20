@@ -1,10 +1,7 @@
 <h1 mat-dialog-title>Create a logement</h1>
     <form [formGroup]="logementForm" (ngSubmit)="onSubmit()">
         <mat-form-field>
-            <input matInput formControlName="name" placeholder="Logement name">
-        </mat-form-field>
-        <mat-form-field>
-            <textarea matInput formControlName="description" placeholder="Description"></textarea>
+            <input matInput formControlName="name" placeholder="Ower name">
         </mat-form-field>
         <mat-form-field>
             <mat-select formControlName="location" placeholder="Where?" class="validate" id="search"
@@ -17,9 +14,6 @@
                    </mat-option>
                   </mat-select>
                   </mat-form-field>
-                  <mat-form-field>
-                    <input matInput formControlName="adress" placeholder="Full Adress">
-                </mat-form-field>
                 <mat-form-field>
                     <input matInput formControlName="phone" placeholder="Phone Number">
                 </mat-form-field>

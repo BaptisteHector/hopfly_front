@@ -11,8 +11,6 @@ import { first } from 'rxjs/operators';
 export class TripOverviewComponent implements OnInit {
 
   @Input() trip: Trip;
-  beg_date: ''
-  end_date: ''
   currentUser: User
   guest: User[]
   constructor(
@@ -29,11 +27,10 @@ export class TripOverviewComponent implements OnInit {
   }
   
   loadParticipant() {
-    this.tripService.getTripUsers(this.trip.user_id)
+    
+    this.tripService.getTripUsers(this.trip.user_id.replace(this.currentUser.id+',', ""))
     .pipe(first())
     .subscribe(users => {
-      const index: number = users.indexOf(this.currentUser);
-      users.splice(index, 1)
       this.guest = users})
   }
 }

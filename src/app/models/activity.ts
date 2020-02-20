@@ -6,4 +6,5 @@ export class Activity {
     price       : number;
     mark        : number;
     amount_mark : number;
+    pic         : string;
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { User, Contact } from '../models';
 import { AuthenticationService, UserService, AlertService, ContactService } from '../services';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { ReplaySubject, Subscription, Subject } from 'rxjs';
 import { takeUntil, first, take } from 'rxjs/operators';
@@ -14,8 +14,8 @@ import { MatSelect } from '@angular/material/select';
 })
 export class ProfileComponent implements OnInit {
   currentUser: User;
-  friends: User[];
-  contacts: Contact[]
+  friends: User[] = [];
+  contacts: Contact[] = [];
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -26,6 +26,28 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadFriends();
+    this.loadContacts()
+  }
+
+  loadFriends() {
+    if (this.currentUser.friend_id === null)
+            return;
+        this.userService.getUserFriends(this.currentUser.friend_id)
+            .pipe()
+            .subscribe(friends => {
+                this.friends = friends
+            });
+  }
+
+  loadContacts() {
+    if (this.currentUser.contact_id === null)
+            return;
+        this.userService.getUserContacts(this.currentUser.contact_id)
+            .pipe()
+            .subscribe(contacts => {
+                this.contacts = contacts
+            });    
   }
 
   onClickCreateFriend() {
@@ -81,9 +103,9 @@ export class ContactDialog {
           this.currentUser = this.authenticationService.currentUserValue;
           
           this.contactForm = this.formBuilder.group({
-              firstname: '',
-              lastname: '',
-              email: '',
+              firstname: ['', Validators.required],
+              lastname: ['', Validators.required],
+              email: ['', Validators.email],
               phone: '',
           });
       }
@@ -94,6 +116,7 @@ export class ContactDialog {
   }
 
   ngOnInit() {
+    console.log(this.currentUser.pic)
   }
 
   public onSubmit() {
@@ -110,17 +133,20 @@ export class ContactDialog {
       .subscribe(
       data => {
           this.alertService.success('Contact created', true);
-          this.currentUser.contact_id += data.id + ','
-          this.userService.updateUser(this.currentUser)
+          if (this.currentUser.contact_id == null)
+            this.currentUser.contact_id = data.id + ','
+          else
+            this.currentUser.contact_id += data.id + ','
+          this.userService.updateUser(this.currentUser, this.currentUser.id)
           .subscribe(
             data => {
                 this.alertService.success('Contact created', true);
-                this.dialogRef.close();
             },
             error => {
                 this.alertService.error(error);
             });
-      },
+            this.dialogRef.close(data);
+          },
       error => {
           this.alertService.error(error);
       });
@@ -138,7 +164,7 @@ export class FriendDialog {
   public filteredUsersMulti: ReplaySubject<User[]> = new ReplaySubject<User[]>(1);
   tmpUsers = new Array();
   protected _onDestroy = new Subject<void>();
-    private inputWatcher: Subscription;
+  private inputWatcher: Subscription;
 
   @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
   @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
@@ -163,6 +189,7 @@ export class FriendDialog {
   }
 
   ngOnInit() {
+    this.loadAllUsers()
   }
 
   ngOnDestroy() {
@@ -225,7 +252,7 @@ protected filterUsersMulti() {
         });
         }
         this.currentUser.friend_id = user_id
-        this.userService.updateUser(this.currentUser)
+        this.userService.updateUser(this.currentUser, this.currentUser.id)
         .subscribe (
           data => {
             this.alertService.success('Friend added', true);

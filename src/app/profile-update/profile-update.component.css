@@ -41,10 +41,12 @@
   
   .profile-pic {
     position: relative;
-      width: 80%;
-      top: -7vh;
-      border-radius: inherit;
+      width: 50%;
+      top: -8vh;
+      border-radius: 50%;
     filter: drop-shadow(0 0 0.2rem black);
+    text-align: center;
+    background-color: white;
   }
   
   body {

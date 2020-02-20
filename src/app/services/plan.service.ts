@@ -97,7 +97,7 @@ export class PlanService {
 
   /** PUT: update the Plan on the server */
   updatePlan (Plan: Plan): Observable<any> {
-    return this.http.put(this.PlansUrl + '/update/' + Plan.id, Plan, this.httpOptions).pipe(
+    return this.http.put(this.PlansUrl + '/update/' + Plan.id.toString(), Plan, this.httpOptions).pipe(
       tap(_ => this.log(`updated Plan id=${Plan.id}`)),
       catchError(this.handleError<any>('updatePlan'))
     );

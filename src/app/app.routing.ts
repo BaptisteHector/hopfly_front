@@ -16,13 +16,13 @@ const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'trip/:id', component: TripComponent },
     { path: 'plan/:id', component: PlanComponent },
     { path: 'trip/update/:id', component: UpdateTripComponent },
-    { path: 'trip/tickets/:id', component: TicketComponent },
+    { path: 'trip/ticket/:id', component: TicketComponent },
     { path: 'trip/logement/:id', component: LogementComponent },
     { path: 'profile/:id', component: ProfileComponent },
     { path: 'profile/update/:id', component: ProfileUpdateComponent },
+    { path: 'trip/:id', component: TripComponent },
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

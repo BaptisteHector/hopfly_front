@@ -1,26 +1,26 @@
-<p>{{ this.currentUser.username }}</p>
 <div class="Profile">
     <div class="container">
-        <ngx-avatar mat-card-avatar *ngIf="currentUser.pic else username" class="profile-pic" src="{{currentUser.pic}}"></ngx-avatar>
+        <img mat-card-avatar size="100" *ngIf="currentUser.pic else username" class="profile-pic" src="{{currentUser.pic}}">
         <ng-template #username>
-            <ngx-avatar mat-card-avatar name="{{currentUser.username}}" class="profile-pic"></ngx-avatar>
+            <img src="../../assets/defaultUser.png" class="profile-pic">
         </ng-template>
         <h2>{{currentUser.username}}</h2>
         <h4>{{currentUser.email}}</h4>
           <div class="bottom-row my-icon"> 
             <div class="pxc-btn">
     <button mat-raised-button color="primary" (click)="onClickCreateFriend()">New Friend</button>
+    <button mat-raised-button color="primary" routerLink="/profile/update/{{currentUser.id}}">Edit</button>
     <button mat-raised-button color="primary" (click)="onClickCreateContact()">New Contact</button>
     </div>
     </div>
     </div>
     </div>
-<div>
-  <h1>Friends</h1>
+<div class="example-container">
+  <h1 class="title2">Friends</h1>
   <li *ngFor="let user of friends">
     <app-friend-overview [user]="user"></app-friend-overview>
   </li>
-  <h1>Contacts</h1>
+  <h1 class="title2">Contacts</h1>
   <li *ngFor="let contact of contacts">
     <app-contact-overview [contact]="contact"></app-contact-overview>
   </li>

@@ -1,1 +1,13 @@
-<p>logement works!</p>
+<h1 class="title">My Logements!
+</h1>
+<div class="createBtn">
+<button mat-raised-button color="primary" (click)="openDialog()">Add Logement</button>
+</div>
+<li *ngFor="let logement of logements">
+    <div class="overview row">
+    <app-logement-overview class="mylist" @fadeAnimation [logement]='logement'></app-logement-overview>
+        <button mat-icon-button color="primary" (click)="onClickDelete()">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</li>

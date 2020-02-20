@@ -1,31 +1,34 @@
 import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
 import { Trip, User, Activity, Plan, Ticket, MBReply, MBFeature } from '../models';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TripService, PlanService, ActivityService, AuthenticationService, AlertService, MapBoxService, TicketService } from '../services';
+import { TripService, PlanService, ActivityService, AuthenticationService, AlertService, MapBoxService, TicketService, UserService } from '../services';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelect } from '@angular/material/select';
 import { ActivityDialog } from '../plan';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
+import { fadeAnimation } from '../utils/animation';
 
 @Component({
   selector: 'app-ticket',
   templateUrl: './ticket.component.html',
-  styleUrls: ['./ticket.component.css']
+  styleUrls: ['./ticket.component.css'],
+  animations: [fadeAnimation]
+
 })
 export class TicketComponent implements OnInit {
 
   @Input() trip: Trip;
   currentUser: User;
-  tickets: Ticket[];
+  tickets: Ticket[] = [];
 
 
   constructor(private route: ActivatedRoute,
     private tripService: TripService,
+    private alertService: AlertService,
     private authenticationService: AuthenticationService,
     public dialog: MatDialog,
-    private router: Router
     ) {
       this.currentUser = this.authenticationService.currentUserValue;
   }
@@ -36,13 +39,25 @@ export class TicketComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(TicketDialog, {
-      width: '250px'
+      width: '70%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       let ret: Ticket = result;
-      if (result)
-        this.tickets.push(ret);
+      if (result) {
+        if (this.trip.ticket_id == null)
+        this.trip.ticket_id = ret.id + ','
+      else
+        this.trip.ticket_id += ret.id + ','
+      this.tripService.updateTrip(this.trip)
+      .subscribe(
+        data => {
+            this.alertService.success('Contact created', true);
+        },
+        error => {
+            this.alertService.error(error);
+        });        this.tickets.push(ret);
+      }
     });
   }
 
@@ -57,6 +72,8 @@ export class TicketComponent implements OnInit {
   }
 
   public loadTickets() {
+    if (this.trip.ticket_id === null)
+      return
     this.tripService.getTripTickets(this.trip.ticket_id)
     .pipe(first())
     .subscribe(tickets => {
@@ -71,7 +88,8 @@ export class TicketComponent implements OnInit {
 export class TicketDialog {
   currentUser: User
   searchText = '';
-  places = new MBReply<MBFeature>();
+  depplaces = new MBReply<MBFeature>();
+  arrplaces = new MBReply<MBFeature>();
   ticketForm: FormGroup;
   depPlace: MBFeature;
   arrPlace: MBFeature;
@@ -81,8 +99,6 @@ export class TicketDialog {
   private inputWatcher: Subscription;    
 
   @ViewChild('placeInputSearch') placeInputSearch;
-  @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
-  @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
   constructor(
       private authenticationService: AuthenticationService,
       private formBuilder: FormBuilder,
@@ -95,12 +111,13 @@ export class TicketDialog {
           this.currentUser = this.authenticationService.currentUserValue;
           
           this.ticketForm = this.formBuilder.group({
-              departure: '',
-              dep_date: '',
-              arr_date: '',
-              arrival: '',
-              number: '',
-              filterlocation: ''
+              departure: ['', Validators.required],
+              dep_date: ['', Validators.required],
+              arr_date: ['', Validators.required],
+              arrival: ['', Validators.required],
+              number: ['', Validators.required],
+              filterdeparture: '',
+              filterarrival: ''
           });
       }
   
@@ -112,19 +129,32 @@ export class TicketDialog {
     this.arrPlace = feature;
   }
 
-  doSearch() {
+  doSearchDep() {
       if (!!this.searchPlaceSub) {
           this.searchPlaceSub.unsubscribe();
       }
-      this.searchPlaceSub = this.mapBoxService.geocoding(this.ticketForm.controls.filterlocation.value).subscribe(
+      this.searchPlaceSub = this.mapBoxService.geocoding(this.ticketForm.controls.filterdeparture.value).subscribe(
           (result) => {
-              this.places = result;
+              this.depplaces = result;
           },
           () => {
           }
       );
   }    
-  
+
+  doSearchArr() {
+    if (!!this.searchPlaceSub) {
+        this.searchPlaceSub.unsubscribe();
+    }
+    this.searchPlaceSub = this.mapBoxService.geocoding(this.ticketForm.controls.filterarrival.value).subscribe(
+        (result) => {
+            this.arrplaces = result;
+        },
+        () => {
+        }
+    );
+}    
+
       
   onNoClick(): void {
     this.dialogRef.close();
@@ -134,11 +164,17 @@ export class TicketDialog {
   }
 
   ngAfterViewInit() {
-      this.ticketForm.controls.filterlocation.valueChanges
+      this.ticketForm.controls.filterdeparture.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
-          this.doSearch();
+          this.doSearchDep();
       });
+      this.ticketForm.controls.filterarrival.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+          this.doSearchArr();
+      });
+
     }
 
   ngOnDestroy() {
@@ -158,16 +194,15 @@ export class TicketDialog {
       }
       this.ticket.dep_date = this.ticketForm.controls.dep_date.value;
       this.ticket.arr_date = this.ticketForm.controls.arr_date.value;
-      this.ticket.departure = this.depPlace.center[0] + ',' + this.depPlace.center[1];
-      this.ticket.arrival = this.arrPlace.center[0] + ',' + this.arrPlace.center[1];
+      this.ticket.departure = this.depPlace.place_name
+      this.ticket.arrival = this.arrPlace.place_name;
       this.ticket.number = this.ticketForm.controls.number.value;
       if (!this.ticket) { return; }
       this.ticketService.addTicket(this.ticket)
       .subscribe(
       data => {
           this.alertService.success('Ticket created', true);
-          this.ticket = data;
-          this.dialogRef.close(this.ticket);
+          this.dialogRef.close(data);
       },
       error => {
           this.alertService.error(error);

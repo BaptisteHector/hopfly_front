@@ -1,31 +1,28 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-
+﻿import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { AlertService } from '../services';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
-@Component({ selector: 'alert', templateUrl: 'alert.component.html' })
+@Component({
+    selector: 'alert',
+    templateUrl: 'alert.component.html'
+})
+
 export class AlertComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     message: any;
 
-    constructor(private alertService: AlertService) { }
+    constructor(private alertService: AlertService,
+        private _snackBar: MatSnackBar) { }
 
     ngOnInit() {
-        this.subscription = this.alertService.getAlert()
-            .subscribe(message => {
-                switch (message && message.type) {
-                    case 'success':
-                        message.cssClass = 'alert alert-success';
-                        break;
-                    case 'error':
-                        message.cssClass = 'alert alert-danger';
-                        break;
-                }
-
-                this.message = message;
-            });
+        this.subscription = this.alertService.getMessage().subscribe(message => {
+            if (message) {
+            this.message = message.text;
+            this._snackBar.open(message.text, message.type, {duration: 1000});
+            }
+        });
     }
 
     ngOnDestroy() {

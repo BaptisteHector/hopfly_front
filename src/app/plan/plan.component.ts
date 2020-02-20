@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Inject, ViewChild, ElementRef } from '@angular/core';
 import { Trip, User, Activity, Plan, MBReply, MBFeature } from '../models';
 import { ActivatedRoute, Router } from '@angular/router';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
@@ -6,7 +6,7 @@ import { TripService, AuthenticationService, PlanService, ActivityService, MapBo
 import { first, take, takeUntil } from 'rxjs/operators';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { MatSelect } from '@angular/material/select';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ReplaySubject, Subject, Subscription } from 'rxjs';
 
 @Component({
@@ -21,6 +21,7 @@ export class PlanComponent implements OnInit {
   planActivities: Activity[] = [];
   activities: Activity[];
   planForm: FormGroup;
+  plans: Plan[] = []
   plan: Plan = new Plan();
 
 
@@ -37,7 +38,8 @@ export class PlanComponent implements OnInit {
       this.currentUser = this.authenticationService.currentUserValue;
 
       this.planForm = this.formBuilder.group({
-        name: '',
+        name: new FormControl('', [
+          Validators.required]),
         activities: []
     });
   }
@@ -45,6 +47,7 @@ export class PlanComponent implements OnInit {
   ngOnInit() {
     this.loadTrip();
     this.loadActivities();
+    this.loadPlans();
   }
 
   public onSubmit()
@@ -114,6 +117,13 @@ export class PlanComponent implements OnInit {
       );
   }
 
+  public loadPlans() {
+    this.planService.getPlans()
+    .subscribe(plans =>{ this.plans = plans
+    }
+      );
+  }
+
   public loadPlan() {
     if (this.trip.plan_id === 0) {
       this.plan = new Plan();
@@ -127,10 +137,12 @@ export class PlanComponent implements OnInit {
   }
 
   public loadPlanActivities() {
+    console.log(this.plan.activities)
     this.planService.getPlanActivities(this.plan.activities)
     .pipe(first())
     .subscribe(activities => {
-        this.planActivities = activities
+      this.planActivities = []
+      activities.forEach(activity => this.planActivities.push(activity))
     });
   }
 
@@ -138,7 +150,8 @@ export class PlanComponent implements OnInit {
     this.activityService.getActivities()
     .pipe(first())
     .subscribe(activities => {
-        this.activities = activities
+        this.activities = []
+        activities.forEach(activity => this.activities.push(activity))
     });
   }
 
@@ -146,6 +159,12 @@ export class PlanComponent implements OnInit {
 
   public onClickCreateActivity(): void {
     this.openDialog();
+  }
+
+  public onChoosePlan(item): void {
+    console.log(item)
+    this.plan = item;
+    this.loadPlanActivities();
   }
 
 
@@ -161,6 +180,8 @@ export class ActivityDialog {
   activityForm: FormGroup;
   currentPlace: MBFeature;
   activity = new Activity();
+  my_preview_img: '';
+  file: File;
   protected _onDestroy = new Subject<void>();
   private searchPlaceSub: Subscription;
   private inputWatcher: Subscription;    
@@ -168,6 +189,8 @@ export class ActivityDialog {
   @ViewChild('placeInputSearch') placeInputSearch;
   @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
   @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
+  @ViewChild('fileInput') fileInput: ElementRef;
+
   constructor(
       private authenticationService: AuthenticationService,
       private formBuilder: FormBuilder,
@@ -180,11 +203,12 @@ export class ActivityDialog {
           this.currentUser = this.authenticationService.currentUserValue;
           
           this.activityForm = this.formBuilder.group({
-              name: '',
-              description: '',
+              name: ['', Validators.required],
+              description: ['', Validators.required],
               price: 0,
-              location: '',
+              location: ['', Validators.required],
               filterlocation: '',
+              selected_img: '',
           });
       }
   
@@ -209,6 +233,18 @@ export class ActivityDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  readURL(event: any) {
+    this.my_preview_img = null;
+    const file: File = event.target.files[0];
+    const myReader: FileReader = new FileReader();
+    myReader.onloadend = (loadEvent: any) => {
+        console.log(loadEvent.target.result)
+        this.my_preview_img = loadEvent.target.result;
+    };
+
+    myReader.readAsDataURL(file);
+}
 
   ngOnInit() {
   }
@@ -236,9 +272,10 @@ export class ActivityDialog {
       if (this.activityForm.invalid) {
           return;
       }
+      this.activity.pic = this.my_preview_img
       this.activity.name = this.activityForm.controls.name.value;
       this.activity.description = this.activityForm.controls.description.value;
-      this.activity.location = this.currentPlace.center[0] + ',' + this.currentPlace.center[1];
+      this.activity.location = this.currentPlace.place_name
       this.activity.price = this.activityForm.controls.price.value;
       if (!this.activity) { return; }
       this.activityService.addActivity(this.activity)

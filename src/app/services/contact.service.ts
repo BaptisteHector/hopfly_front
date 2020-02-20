@@ -88,7 +88,7 @@ export class ContactService {
 
   /** PUT: update the Contact on the server */
   updateContact (Contact: Contact): Observable<any> {
-    return this.http.put(this.ContactsUrl, Contact, this.httpOptions).pipe(
+    return this.http.put(this.ContactsUrl + "/update/" + Contact.id.toString(), Contact, this.httpOptions).pipe(
       tap(_ => this.log(`updated Contact id=${Contact.id}`)),
       catchError(this.handleError<any>('updateContact'))
     );

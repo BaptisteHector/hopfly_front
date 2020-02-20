@@ -1,0 +1,82 @@
+.ft-recipe {
+    position: relative;
+    border-radius: 5%;
+    background-color: white;
+  }
+  
+  .ft-recipe img {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 0.1rem black);
+    border-radius: inherit;
+    -o-object-fit: cover;
+       object-fit: cover;
+    -o-object-position: 50% 50%;
+       object-position: 50% 50%;
+  }
+  .ft-recipe .ft-recipe__content {
+    -webkit-box-flex: 1;
+            flex: 1;
+    padding: 0 2em 1em;
+  }
+  .ft-recipe .ft-recipe__content .content__header .row-wrapper {
+    display: -webkit-box;
+    display: flex;
+    padding: .55em 0 .3em;
+    border-bottom: 1px solid #d8d8d8;
+  }
+  .ft-recipe .ft-recipe__content .content__header .row-wrapper .recipe-title {
+    font-family: var(--headlinesFont);
+    font-weight: 600;
+  }
+  .ft-recipe .ft-recipe__content .content__header .recipe-details {
+    display: -webkit-box;
+    display: flex;
+    list-style: none;
+    padding: 1.4em 0 1em;
+    margin: 0;
+    height: 100%;
+    justify-content: space-around;
+  }
+  
+  .ft-recipe .ft-recipe__content .content__header .recipe-details .recipe-details-item i {
+    font-size: 30px;
+  }
+  
+  .ft-recipe .ft-recipe__content .content__header .recipe-details .recipe-details-item .value {
+    color: #ff4f87;
+    margin-left: .35em;
+    vertical-align: bottom;
+    font-size: 25px;
+    font-weight: 600;
+  }
+  
+  .ft-recipe .ft-recipe__content .description {
+    margin: .3em 0 1.8em;
+  }
+  .ft-recipe .ft-recipe__content .content__footer {
+    text-align: center;
+    margin: 0 3rem;
+  }
+  .ft-recipe .ft-recipe__content .content__footer a {
+    font-family: var(--headlinesFont);
+    display: inline-block;
+    background: var(--wildWatermelon);
+    padding: .45em 1em;
+    width: 100%;
+    text-align: center;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 500;
+    letter-spacing: .2px;
+    font-size: 17px;
+    -webkit-transition: box-shadow 250ms ease, -webkit-transform 250ms ease;
+    transition: box-shadow 250ms ease, -webkit-transform 250ms ease;
+    transition: transform 250ms ease, box-shadow 250ms ease;
+    transition: transform 250ms ease, box-shadow 250ms ease, -webkit-transform 250ms ease;
+  }
+  .ft-recipe .ft-recipe__content .content__footer a:hover {
+    -webkit-transform: translateY(-3px);
+            transform: translateY(-3px);
+    box-shadow: 0 10px 34px 0 rgba(255, 79, 135, 0.32);
+  }

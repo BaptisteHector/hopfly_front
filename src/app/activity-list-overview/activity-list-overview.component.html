@@ -1,0 +1,19 @@
+    <div class="plx-card silver">
+      <div class="pxc-avatar">
+        <img *ngIf="activity.pic else defaultpic" src="{{activity.pic}}">
+        <ng-template #defaultpic>
+            <img src="../../assets/activityIcon.png">
+          </ng-template>
+      </div>
+    <div class="pxc-subcard">
+      <div class="pxc-title">{{activity.name}}</div>
+      <div class="pxc-sub"> {{activity.location}}  </div>
+      <div class="pxc-feats">{{activity.description}}</div>
+      <div class="bottom-row"> 
+        <ul class="recipe-details">
+            <li class="recipe-details-item time"><mat-icon color="primary" class="ion ion-ios-person-outline">stars</mat-icon><span class="value">{{activity.amount_mark}}</span></li>
+            <li class="recipe-details-item servings"><mat-icon color="primary" class="ion ion-ios-person-outline">euro_symbol</mat-icon><span class="value">{{activity.price}}</span></li>
+          </ul>
+      </div>
+    </div>
+</div>

@@ -88,7 +88,7 @@ export class LogementService {
 
   /** PUT: update the Logement on the server */
   updateLogement (Logement: Logement): Observable<any> {
-    return this.http.put(this.LogementsUrl, Logement, this.httpOptions).pipe(
+    return this.http.put(this.LogementsUrl + "/update/" + Logement.id.toString(), Logement, this.httpOptions).pipe(
       tap(_ => this.log(`updated Logement id=${Logement.id}`)),
       catchError(this.handleError<any>('updateLogement'))
     );

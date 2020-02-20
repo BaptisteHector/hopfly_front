@@ -88,7 +88,7 @@ export class TicketService {
 
   /** PUT: update the Ticket on the server */
   updateTicket (Ticket: Ticket): Observable<any> {
-    return this.http.put(this.TicketsUrl, Ticket, this.httpOptions).pipe(
+    return this.http.put(this.TicketsUrl + "/update/" + Ticket.id.toString(), Ticket, this.httpOptions).pipe(
       tap(_ => this.log(`updated Ticket id=${Ticket.id}`)),
       catchError(this.handleError<any>('updateTicket'))
     );

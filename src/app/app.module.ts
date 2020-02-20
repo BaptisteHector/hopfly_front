@@ -36,6 +36,12 @@ import { TripOverviewComponent } from './trip-overview/trip-overview.component';
 import { ActivityOverviewComponent } from './activity-overview/activity-overview.component';
 import { FriendOverviewComponent } from './friend-overview/friend-overview.component';
 import { ContactOverviewComponent } from './contact-overview/contact-overview.component';
+import { ActivityListOverviewComponent } from './activity-list-overview/activity-list-overview.component';
+import { TicketOverviewComponent } from './ticket-overview/ticket-overview.component';
+import { LogementOverviewComponent } from './logement-overview/logement-overview.component';
+import { PlanOverviewComponent } from './plan-overview/plan-overview.component';
+import { AlertService } from './services';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
     imports: [
@@ -59,12 +65,14 @@ import { ContactOverviewComponent } from './contact-overview/contact-overview.co
         DragDropModule,
         MatToolbarModule,
         AvatarModule,
-        MatGridListModule
+        MatSnackBarModule,
+        MatGridListModule,
     ],
     declarations: [
         AppComponent,
         HomeComponent,
         LoginComponent,
+        AlertComponent,
         TripDialog,
         ContactDialog,
         FriendDialog,
@@ -72,7 +80,6 @@ import { ContactOverviewComponent } from './contact-overview/contact-overview.co
         LogementDialog,
         ActivityDialog,
         RegisterComponent,
-        AlertComponent,
         TripComponent,
         PlanComponent,
         ProfileComponent,
@@ -84,6 +91,10 @@ import { ContactOverviewComponent } from './contact-overview/contact-overview.co
         ActivityOverviewComponent,
         FriendOverviewComponent,
         ContactOverviewComponent,
+        ActivityListOverviewComponent,
+        TicketOverviewComponent,
+        LogementOverviewComponent,
+        PlanOverviewComponent,
     ],
     entryComponents: [
         ActivityDialog,
@@ -93,8 +104,12 @@ import { ContactOverviewComponent } from './contact-overview/contact-overview.co
         TicketDialog,
         LogementDialog
     ],
+    exports: [
+        AlertComponent
+    ],
     providers: [
-        MatDatepickerModule
+        MatDatepickerModule,
+        AlertService
     ],
     bootstrap: [AppComponent]
 })

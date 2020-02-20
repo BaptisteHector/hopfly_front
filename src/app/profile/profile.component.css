@@ -5,6 +5,25 @@
     color: white;
 }
 
+.title2 {
+  text-align: center;
+  color: white;
+}
+
+.example-container {
+  width: 100%;
+  text-align: center;
+  margin: 0 25px 25px 0;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.avat {
+  width: 50%;
+  height: 50%;
+  text-align: center;
+}
+
 * {
     box-sizing: border-box;
   }
@@ -36,15 +55,17 @@
     align-items: center;
     justify-content: space-around;
     width: 100%;
-    padding-top: 40px;
+    padding: 2% 0 2% 0 ;
   }
   
   .profile-pic {
     position: relative;
-      width: 80%;
-      top: -7vh;
-      border-radius: inherit;
+      width: 50%;
+      top: -8vh;
+      border-radius: 50%;
     filter: drop-shadow(0 0 0.2rem black);
+    text-align: center;
+    background-color: white;
   }
   
   body {
@@ -54,11 +75,10 @@
       width: 50%;
       background-color: #fff;
       margin-top: 50px;
-      padding: 0 40px 0;
+      padding: none;
       border-radius: 6px;
       -webkit-border-radius: 6px;
       -moz-border-radius: 6px;
-      text-align: center;
     }
   
     h2 {

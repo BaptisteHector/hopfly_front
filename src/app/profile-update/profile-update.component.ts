@@ -1,8 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { User } from '../models';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthenticationService, UserService, AlertService } from '../services';
 import {Location} from '@angular/common';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -23,13 +24,14 @@ export class ProfileUpdateComponent implements OnInit {
     private userService: UserService,
     private alertService: AlertService,
     private _location: Location,
+    private router: Router,
   ) {
     this.currentUser = this.authenticationService.currentUserValue;
             
             this.profileForm = this.formBuilder.group({
-                username: this.currentUser.username,
+                username: [this.currentUser.username, Validators.required],
                 password: '',
-                email: this.currentUser.email,
+                email: [this.currentUser.email, Validators.required, Validators.email],
                 selected_img: this.currentUser.pic,
             });
   }
@@ -83,19 +85,26 @@ onSelectFile(event) {
         return;
     }
     let user = new User()
+    console.log(this.my_preview_img)
     user.pic = this.my_preview_img
+    user.id = this.currentUser.id
     user.username = this.profileForm.controls.username.value;
     user.email = this.profileForm.controls.email.value;
+    user.contact_id = this.currentUser.contact_id
+    user.trip_id = this.currentUser.trip_id
+    user.friend_id = this.currentUser.friend_id
     if (this.profileForm.controls.password.value != '')
       user.password = this.profileForm.controls.password.value;
     else
       user.password = this.currentUser.password
     if (!user) { return; }
     
-    this.userService.updateUser(user)
+    this.userService.updateUser(user, this.currentUser.id)
     .subscribe(
     data => {
+      this.authenticationService.update()
         this.alertService.success('User Updated', true);
+        this._location.back();
     },
     error => {
         this.alertService.error(error);

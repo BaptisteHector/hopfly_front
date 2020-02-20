@@ -9,7 +9,7 @@
                    <mat-option>
                      <ngx-mat-select-search formControlName="filterdeparture"></ngx-mat-select-search>
                    </mat-option>
-                   <mat-option *ngFor="let place of places.features" [value]="place" (click)="placeClickDep(place)">
+                   <mat-option *ngFor="let place of depplaces.features" [value]="place" (click)="placeClickDep(place)">
                     {{place.place_name}}
                    </mat-option>
                   </mat-select>
@@ -20,20 +20,16 @@
                        <mat-option>
                          <ngx-mat-select-search formControlName="filterarrival"></ngx-mat-select-search>
                        </mat-option>
-                       <mat-option *ngFor="let place of places.features" [value]="place" (click)="placeClickArr(place)">
+                       <mat-option *ngFor="let place of arrplaces.features" [value]="place" (click)="placeClickArr(place)">
                         {{place.place_name}}
                        </mat-option>
                       </mat-select>
                       </mat-form-field>
             <mat-form-field>
-                <input matInput formControlName="dep_date" [matDatepicker]="picker1" placeholder="Beginning of your ticket">
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
+                <input matInput formControlName="dep_date" type="datetime-local" placeholder="Beginning of your ticket">
         </mat-form-field>
         <mat-form-field>
-            <input matInput formControlName="arr_date" [matDatepicker]="picker2" placeholder="End of your ticket">
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
+            <input matInput formControlName="arr_date" type="datetime-local" placeholder="Beginning of your ticket">
         </mat-form-field>
     <button mat-raised-button type="submit">Create</button>
 </form>

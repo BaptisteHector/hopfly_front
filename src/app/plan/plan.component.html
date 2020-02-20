@@ -1,31 +1,52 @@
-<h1>Make your plan !</h1>
+<h1 class="title">Make your plan !</h1>
 <form [formGroup]="planForm" (ngSubmit)="onSubmit()">
-  <input matInput formControlName="name" *ngIf="trip.plan_id === 0" placeholder="Plan name">
-  <h1 formControlName="name" *ngIf="trip.plan_id !== 0">{{plan.name}}</h1>
-  <h2>Plan Activities</h2>
-    <button mat-icon-button (click)="onClickCreateActivity()">
-        <mat-icon>add</mat-icon>
+  <div class="plan-name">
+  <mat-form-field class="name-input" appearance="outline">
+    <input matInput formControlName="name" placeholder="Plan name">
+  </mat-form-field>
+  <button mat-raised-button class="save-btn" color="primary" type="submit">
+    Save the plan
+  </button>
+</div>
+  <div class="row compare">
+    <div class="example-container">
+  <h2 class="title2">Plan Activities</h2>
+    <button mat-raised-button color="primary" class="py-3" (click)="onClickCreateActivity()">
+        Create Activity
     </button>
       <div
       cdkDropList
       #planActivitiesList="cdkDropList"
+      class="example-list"
       [cdkDropListData]="planActivities"
       [cdkDropListConnectedTo]="[activitiesList]"
       (cdkDropListDropped)="drop($event)">
-      <div class="example-box" *ngFor="let item of planActivities" cdkDrag>{{item.name}}</div>
+      <div *ngFor="let item of planActivities" cdkDrag>
+        <app-activity-list-overview [activity]="item"></app-activity-list-overview>
+        <app-activity-list-overview *cdkDragPreview [activity]="item"></app-activity-list-overview>
+      </div>
     </div>
-  
-    <h2>Acitivities Suggestion</h2>
+    <h2 class="title2">Use Plan</h2>
+      <li *ngFor="let item of plans">
+        <app-plan-overview (choosePlan)="onChoosePlan($event)" [plan]="item"></app-plan-overview>
+      </li>
+  </div>
+  <div class="col example-container">
+  <h2 class="title2">Acitivities Suggestion</h2>
   
     <div
       cdkDropList
+      class="example-list"
       #activitiesList="cdkDropList"
       [cdkDropListData]="activities"
       [cdkDropListConnectedTo]="[planActivitiesList]"
       (cdkDropListDropped)="drop($event)">
-      <div *ngFor="let item of activities" cdkDrag>{{item.name}}</div>
+      <div *ngFor="let item of activities" cdkDrag>
+        <app-activity-list-overview [activity]="item"></app-activity-list-overview>
+        <app-activity-list-overview *cdkDragPreview [activity]="item"></app-activity-list-overview>
+
+      </div>
     </div>
-  <button mat-raised-button type="submit">
-    Save the plan
-  </button>
+  </div>
+  </div> 
 </form>
