@@ -158,7 +158,6 @@ export class UpdateTripComponent implements OnInit {
     }
 
     readURL(event: any) {
-        this.my_preview_img = null;
         const file: File = event.target.files[0];
         const myReader: FileReader = new FileReader();
         myReader.onloadend = (loadEvent: any) => {
@@ -170,10 +169,11 @@ export class UpdateTripComponent implements OnInit {
     }
 
     public onSubmit() {
-        if (this.tripUpdateForm.invalid) {
-            return;
-        }
-        this.trip.pic = this.my_preview_img
+      console.log(this.my_preview_img)
+        if (this.my_preview_img)
+          this.trip.pic = this.my_preview_img
+        else
+          this.trip.pic = this.trip.pic
         this.trip.name = this.tripUpdateForm.controls.name.value;
         this.trip.begin_date = this.tripUpdateForm.controls.begin_date.value;
         this.trip.end_date = this.tripUpdateForm.controls.end_date.value;

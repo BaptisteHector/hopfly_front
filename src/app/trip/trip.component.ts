@@ -57,7 +57,11 @@ export class TripComponent implements OnInit {
   }
 
   public loadUsers() {
-    this.tripService.getTripUsers(this.trip.user_id.replace(this.currentUser.id+',', ""))
+    let usersId = this.trip.user_id.replace(this.currentUser.id+',', "")
+    if (usersId === '') {
+      return ;
+    }
+    this.tripService.getTripUsers(usersId)
     .pipe(first())
     .subscribe(users => {
         this.guest = users

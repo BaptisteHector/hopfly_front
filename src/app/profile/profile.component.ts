@@ -52,7 +52,7 @@ export class ProfileComponent implements OnInit {
 
   onClickCreateFriend() {
     const dialogRef = this.dialog.open(FriendDialog, {
-      width: '20%'
+      width: '70%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -68,7 +68,7 @@ export class ProfileComponent implements OnInit {
 
   onClickCreateContact() {
     const dialogRef = this.dialog.open(ContactDialog, {
-      width: '20%'
+      width: '70%'
     });
 
     dialogRef.afterClosed().subscribe(result => {

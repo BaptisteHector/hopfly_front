@@ -46,12 +46,12 @@ export class PlanComponent implements OnInit {
 
   ngOnInit() {
     this.loadTrip();
-    this.loadActivities();
-    this.loadPlans();
   }
 
   public onSubmit()
   {
+    if (this.planForm.invalid)
+      return
     let plan = new Plan()
     let ret = '';
     this.planActivities.forEach(element => {
@@ -59,6 +59,7 @@ export class PlanComponent implements OnInit {
     });
     plan.activities = ret
     plan.location = this.trip.location
+    plan.name = this.planForm.controls.name.value;
     if (this.trip.plan_id === 0)
     {
       console.log("PLAN NAME" + this.planForm.controls.name.value)
@@ -97,7 +98,7 @@ export class PlanComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(ActivityDialog, {
-      width: '250px'
+      width: '70%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -119,7 +120,14 @@ export class PlanComponent implements OnInit {
 
   public loadPlans() {
     this.planService.getPlans()
-    .subscribe(plans =>{ this.plans = plans
+    .subscribe(plans =>{
+      this.plans = []
+      plans.forEach(plan => {
+        console.log(this.plan.id)
+        console.log(plan.id)
+        if (this.plan.id !== plan.id)
+          this.plans.push(plan)
+      })
     }
       );
   }
@@ -132,8 +140,8 @@ export class PlanComponent implements OnInit {
     this.planService.getPlan(this.trip.plan_id)
     .subscribe(plan => { this.plan = plan;
       this.planForm.controls.name.setValue(plan.name);
-      console.log(this.plan);
-    this.loadPlanActivities()});
+      this.loadPlans();
+      this.loadPlanActivities()});
   }
 
   public loadPlanActivities() {
@@ -142,7 +150,10 @@ export class PlanComponent implements OnInit {
     .pipe(first())
     .subscribe(activities => {
       this.planActivities = []
-      activities.forEach(activity => this.planActivities.push(activity))
+      activities.forEach(activity => {
+        this.planActivities.push(activity)
+        this.loadActivities();
+      })
     });
   }
 
@@ -151,7 +162,10 @@ export class PlanComponent implements OnInit {
     .pipe(first())
     .subscribe(activities => {
         this.activities = []
-        activities.forEach(activity => this.activities.push(activity))
+        activities.forEach(activity => {
+          if (this.plan.activities.split(',').includes(activity.id.toString()) === false)
+            this.activities.push(activity)
+        })
     });
   }
 

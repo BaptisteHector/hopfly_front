@@ -16,11 +16,11 @@ export class FriendOverviewComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.user)
     if (this.user.friend_id)
-      this.friends = this.user.friend_id.split(',').length
+      this.friends = this.user.friend_id.split(',').length - 1
     else
       this.friends = 0
     if (this.user.trip_id)
-      this.trips = this.user.trip_id.split(',').length
+      this.trips = this.user.trip_id.split(',').length - 1
     else
       this.trips = 0
   }

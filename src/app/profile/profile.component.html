@@ -1,6 +1,6 @@
 <div class="Profile">
     <div class="container">
-        <img mat-card-avatar size="100" *ngIf="currentUser.pic else username" class="profile-pic" src="{{currentUser.pic}}">
+        <img *ngIf="currentUser.pic else username" class="profile-pic" src="{{currentUser.pic}}">
         <ng-template #username>
             <img src="../../assets/defaultUser.png" class="profile-pic">
         </ng-template>

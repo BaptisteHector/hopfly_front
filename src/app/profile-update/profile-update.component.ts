@@ -31,7 +31,7 @@ export class ProfileUpdateComponent implements OnInit {
             this.profileForm = this.formBuilder.group({
                 username: [this.currentUser.username, Validators.required],
                 password: '',
-                email: [this.currentUser.email, Validators.required, Validators.email],
+                email: [this.currentUser.email, Validators.required],
                 selected_img: this.currentUser.pic,
             });
   }
@@ -81,25 +81,21 @@ onSelectFile(event) {
 }
 
   public onSubmit() {
-    if (this.profileForm.invalid) {
-        return;
-    }
-    let user = new User()
-    console.log(this.my_preview_img)
-    user.pic = this.my_preview_img
-    user.id = this.currentUser.id
-    user.username = this.profileForm.controls.username.value;
-    user.email = this.profileForm.controls.email.value;
-    user.contact_id = this.currentUser.contact_id
-    user.trip_id = this.currentUser.trip_id
-    user.friend_id = this.currentUser.friend_id
-    if (this.profileForm.controls.password.value != '')
-      user.password = this.profileForm.controls.password.value;
+    if (this.my_preview_img)
+      this.currentUser.pic = this.my_preview_img
     else
-      user.password = this.currentUser.password
-    if (!user) { return; }
-    
-    this.userService.updateUser(user, this.currentUser.id)
+    this.currentUser.pic = this.currentUser.pic
+    this.currentUser.id = this.currentUser.id
+    this.currentUser.username = this.profileForm.controls.username.value;
+    this.currentUser.email = this.profileForm.controls.email.value;
+    this.currentUser.contact_id = this.currentUser.contact_id
+    this.currentUser.trip_id = this.currentUser.trip_id
+    this.currentUser.friend_id = this.currentUser.friend_id
+    if (this.profileForm.controls.password.value != '')
+    this.currentUser.password = this.profileForm.controls.password.value;
+    else
+    this.currentUser.password = this.currentUser.password    
+    this.userService.updateUser(this.currentUser, this.currentUser.id)
     .subscribe(
     data => {
       this.authenticationService.update()
